@@ -38,8 +38,20 @@ public struct ChatInputView: View {
                     .focused($isInputFocused)
                     .onSubmit(onSend)
             }
+            #elseif os(iOS) || os(tvOS) || os(visionOS)
+            if #available(iOS 16.0, tvOS 16.0, visionOS 1.0, *) {
+                TextField("Type a message...", text: $text, axis: .vertical)
+                    .textFieldStyle(.roundedBorder)
+                    .focused($isInputFocused)
+                    .onSubmit(onSend)
+            } else {
+                TextField("Type a message...", text: $text)
+                    .textFieldStyle(.roundedBorder)
+                    .focused($isInputFocused)
+                    .onSubmit(onSend)
+            }
             #else
-            TextField("Type a message...", text: $text, axis: .vertical)
+            TextField("Type a message...", text: $text)
                 .textFieldStyle(.roundedBorder)
                 .focused($isInputFocused)
                 .onSubmit(onSend)
