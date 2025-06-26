@@ -26,10 +26,24 @@ public struct ChatInputView: View {
     
     public var body: some View {
         HStack {
+            #if os(macOS)
+            if #available(macOS 13, *) {
+                TextField("Type a message...", text: $text, axis: .vertical)
+                    .textFieldStyle(.roundedBorder)
+                    .focused($isInputFocused)
+                    .onSubmit(onSend)
+            } else {
+                TextField("Type a message...", text: $text)
+                    .textFieldStyle(.roundedBorder)
+                    .focused($isInputFocused)
+                    .onSubmit(onSend)
+            }
+            #else
             TextField("Type a message...", text: $text, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
                 .focused($isInputFocused)
                 .onSubmit(onSend)
+            #endif
             Button(action: onSend) {
                 Image(systemName: "paperplane.fill")
             }

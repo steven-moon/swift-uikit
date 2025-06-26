@@ -157,7 +157,7 @@ public struct UIAIStyleRegistry {
 /// Neumorphic (Soft UI) style.
 public struct NeumorphicStyle: UIAIStyle {
     public var colorScheme: UIAIColorScheme { .light }
-    public var backgroundColor: Color { Color(.systemGray6) }
+    public var backgroundColor: Color { systemGray6 }
     public var foregroundColor: Color { Color.primary }
     public var accentColor: Color { Color.blue }
     public var cornerRadius: CGFloat { 16 }
@@ -480,8 +480,8 @@ public struct SkeuomorphicStyle: UIAIStyle {
         case .neonJungleDark: return Color(hex: "#181818")
         case .cappuccinoLight: return Color(hex: "#F7F3EF")
         case .cappuccinoDark: return Color(hex: "#3E2723")
-        case .light: return Color(.systemGray6)
-        case .dark: return Color(.systemGray4)
+        case .light: return systemGray6
+        case .dark: return systemGray4
         case .vibrant: return Color.orange.opacity(0.2)
         case .highContrast: return Color.white
         }
@@ -1103,4 +1103,24 @@ public extension UIAIStyle {
         default: return .gray
         }
     }
-} 
+}
+
+#if canImport(UIKit)
+private let systemGray6 = Color(.systemGray6)
+private let systemGray4 = Color(.systemGray4)
+#else
+private let systemGray6: Color = {
+    if #available(macOS 14, *) {
+        return Color(nsColor: .windowBackgroundColor)
+    } else {
+        return Color(white: 0.95)
+    }
+}()
+private let systemGray4: Color = {
+    if #available(macOS 14, *) {
+        return Color(nsColor: .controlBackgroundColor)
+    } else {
+        return Color(white: 0.7)
+    }
+}()
+#endif 

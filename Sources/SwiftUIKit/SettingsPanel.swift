@@ -10,7 +10,6 @@
 
 import SwiftUI
 import Foundation
-import os
 
 /// A SwiftUI settings panel for model, generation, and app preferences.
 ///
@@ -41,8 +40,6 @@ public struct SettingsPanel: View {
     private var currentStyle: any UIAIStyle {
         UIAIStyleRegistry.style(for: selectedStyleKind, colorScheme: selectedColorScheme)
     }
-    
-    private let settingsLogger = Logger(subsystem: "com.clevercoding.MLXChatApp", category: "UIAISettings")
     
     public init(selectedStyleKindRaw: Binding<String>, selectedColorSchemeRaw: Binding<String>) {
         self._selectedStyleKindRaw = selectedStyleKindRaw
@@ -78,7 +75,7 @@ public struct SettingsPanel: View {
                     .foregroundColor(currentStyle.secondaryForegroundColor)
                     .padding(.bottom, 2)
                 VStack(spacing: 12) {
-                    ModelCardView(model: .init(name: "Preview Model", statusMessage: "Ready", statusColor: currentStyle.successColor))
+                    ModelCardView(model: .init(id: "preview", name: "Preview Model", description: "A preview model.", statusMessage: "Ready", statusColor: currentStyle.successColor))
                         .frame(width: 220, height: 120)
                         .uiaiStyle(currentStyle)
                     ErrorBanner(message: "This is a preview error banner.", style: .error, isPresented: $showErrorPreview)
@@ -176,10 +173,10 @@ public struct SettingsPanel: View {
                     }
                     .pickerStyle(MenuPickerStyle())
                     .onTapGesture {
-                        settingsLogger.info("Picker tapped")
+                        print("Picker tapped")
                     }
                     .onChange(of: selectedColorSchemeRaw) { newValue in
-                        settingsLogger.info("Color scheme changed to: \(newValue)")
+                        print("Color scheme changed to: \(newValue)")
                     }
                 }
                 .padding()

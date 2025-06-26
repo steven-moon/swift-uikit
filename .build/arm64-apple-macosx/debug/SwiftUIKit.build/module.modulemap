@@ -1,0 +1,4 @@
+module SwiftUIKit {
+    header "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/SwiftUIKit-Swift.h"
+    requires objc
+}

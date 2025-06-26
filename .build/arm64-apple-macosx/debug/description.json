@@ -1,0 +1,913 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.xctest/Contents/MacOS/SwiftUIKitPackageTests",
+      "packagePath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit",
+      "productName" : "SwiftUIKitPackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.SwiftUIKit-arm64-apple-macosx15.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/sources",
+      "importPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/AsyncImageView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatHistoryView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatInputView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatSessionManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/DebugPanel.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ErrorBanner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelCardView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelDetailView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelDiscoveryView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelSuggestionBanner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelTypes.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/OnboardingBanner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/SettingsPanel.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/StyleGallery.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/TokenProgressBar.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/UIAIStyle.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "SwiftUIKit",
+      "moduleOutputPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules/SwiftUIKit.swiftmodule",
+      "objects" : [
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/AsyncImageView.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatHistoryView.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatInputView.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatSessionManager.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatView.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/DebugPanel.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ErrorBanner.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelCardView.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelDetailView.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelDiscoveryView.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelSuggestionBanner.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelTypes.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/OnboardingBanner.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/SettingsPanel.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/StyleGallery.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/TokenProgressBar.swift.o",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/UIAIStyle.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx12.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j12",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/SwiftUIKit-Swift.h",
+        "-profile-coverage-mapping",
+        "-profile-generate",
+        "-color-diagnostics",
+        "-swift-version",
+        "5",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g"
+      ],
+      "outputFileMapPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/AsyncImageView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatHistoryView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatInputView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatSessionManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/DebugPanel.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ErrorBanner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelCardView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelDetailView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelDiscoveryView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelSuggestionBanner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelTypes.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/OnboardingBanner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/SettingsPanel.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/StyleGallery.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/TokenProgressBar.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/UIAIStyle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules/SwiftUIKit.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/AsyncImageView.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatHistoryView.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatInputView.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatSessionManager.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatView.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/DebugPanel.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ErrorBanner.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelCardView.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelDetailView.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelDiscoveryView.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelSuggestionBanner.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelTypes.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/OnboardingBanner.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/SettingsPanel.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/StyleGallery.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/TokenProgressBar.swift",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/UIAIStyle.swift"
+      ],
+      "tempsPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.SwiftUIKitPackageTests-arm64-apple-macosx15.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/sources",
+      "importPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules/SwiftUIKitTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "SwiftUIKitPackageTests",
+      "moduleOutputPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules/SwiftUIKitPackageTests.swiftmodule",
+      "objects" : [
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx12.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j12",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/SwiftUIKitPackageTests-Swift.h",
+        "-profile-coverage-mapping",
+        "-profile-generate",
+        "-color-diagnostics",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g"
+      ],
+      "outputFileMapPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules/SwiftUIKitPackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.SwiftUIKitTests-arm64-apple-macosx15.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/sources",
+      "importPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Tests/SwiftUIKitTests/SwiftUIKitTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules/SwiftUIKit.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "SwiftUIKitTests",
+      "moduleOutputPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules/SwiftUIKitTests.swiftmodule",
+      "objects" : [
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/SwiftUIKitTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j12",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-profile-coverage-mapping",
+        "-profile-generate",
+        "-color-diagnostics",
+        "-swift-version",
+        "5",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g"
+      ],
+      "outputFileMapPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/SwiftUIKitTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules/SwiftUIKitTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/stevenmoon/GitRepo/Company/swift-uikit/Tests/SwiftUIKitTests/SwiftUIKitTests.swift"
+      ],
+      "tempsPath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "SwiftUIKit" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "SwiftUIKit",
+      "-incremental",
+      "-c",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/AsyncImageView.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatHistoryView.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatInputView.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatSessionManager.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatView.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/DebugPanel.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ErrorBanner.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelCardView.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelDetailView.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelDiscoveryView.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelSuggestionBanner.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelTypes.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/OnboardingBanner.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/SettingsPanel.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/StyleGallery.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/TokenProgressBar.swift",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/UIAIStyle.swift",
+      "-I",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx12.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j12",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/SwiftUIKit-Swift.h",
+      "-profile-coverage-mapping",
+      "-profile-generate",
+      "-color-diagnostics",
+      "-swift-version",
+      "5",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "SwiftUIKitPackageTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "SwiftUIKitPackageTests",
+      "-incremental",
+      "-c",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.derived/runner.swift",
+      "-I",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx12.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j12",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/SwiftUIKitPackageTests-Swift.h",
+      "-profile-coverage-mapping",
+      "-profile-generate",
+      "-color-diagnostics",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "SwiftUIKitTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "SwiftUIKitTests",
+      "-incremental",
+      "-c",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/Tests/SwiftUIKitTests/SwiftUIKitTests.swift",
+      "-I",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j12",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-profile-coverage-mapping",
+      "-profile-generate",
+      "-color-diagnostics",
+      "-swift-version",
+      "5",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "SwiftUIKit" : [
+
+    ],
+    "SwiftUIKitPackageTests" : [
+      "SwiftUIKitTests",
+      "SwiftUIKit"
+    ],
+    "SwiftUIKitTests" : [
+      "SwiftUIKit"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+    "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.derived/runner.swift" : {
+      "inputs" : [
+
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "traitConfiguration" : {
+    "enableAllTraits" : false
+  },
+  "writeCommands" : {
+    "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/AsyncImageView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatHistoryView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatInputView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatSessionManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ChatView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/DebugPanel.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ErrorBanner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelCardView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelDetailView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelDiscoveryView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelSuggestionBanner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/ModelTypes.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/OnboardingBanner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/SettingsPanel.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/StyleGallery.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/TokenProgressBar.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Sources/SwiftUIKit/UIAIStyle.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/sources"
+    },
+    "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/sources"
+    },
+    "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/AsyncImageView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatHistoryView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatInputView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatSessionManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ChatView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/DebugPanel.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ErrorBanner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelCardView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelDetailView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelDiscoveryView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelSuggestionBanner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/ModelTypes.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/OnboardingBanner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/SettingsPanel.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/StyleGallery.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/TokenProgressBar.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKit.build/UIAIStyle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/SwiftUIKitTests.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/Tests/SwiftUIKitTests/SwiftUIKitTests.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/sources"
+    },
+    "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/stevenmoon/GitRepo/Company/swift-uikit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

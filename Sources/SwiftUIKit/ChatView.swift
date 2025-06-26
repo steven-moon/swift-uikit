@@ -9,7 +9,9 @@
 //
 
 import SwiftUI
-import MLXEngine
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// A SwiftUI view for LLM chat interfaces.
 ///
@@ -109,6 +111,7 @@ public struct ChatView: View {
         .background(uiaiStyle.backgroundColor.ignoresSafeArea())
         .onAppear {
             print("[ChatView] Appeared with style: \(type(of: uiaiStyle)), colorScheme: \(uiaiStyle.colorScheme)")
+            #if canImport(UIKit)
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()
             appearance.backgroundColor = UIColor(uiaiStyle.backgroundColor)
@@ -117,6 +120,7 @@ public struct ChatView: View {
             if #available(iOS 15.0, *) {
                 UINavigationBar.appearance().scrollEdgeAppearance = appearance
             }
+            #endif
         }
         .onChange(of: uiaiStyle.colorScheme) { newValue in
             print("[ChatView] Color scheme changed to: \(newValue)")

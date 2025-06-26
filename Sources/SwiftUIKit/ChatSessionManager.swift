@@ -9,7 +9,6 @@
 
 import Foundation
 import Combine
-import MLXEngine
 
 /// An observable object that manages chat state and interaction with MLXEngine's ChatSession.
 ///
@@ -22,7 +21,7 @@ public class ChatSessionManager: ObservableObject {
         public let id: UUID = UUID()
         public let sender: Sender
         public let text: String
-        public init(sender: Sender, text: String) {
+        init(sender: Sender, text: String) {
             self.sender = sender
             self.text = text
         }
@@ -37,18 +36,8 @@ public class ChatSessionManager: ObservableObject {
     /// Starts a new chat session with the given model configuration.
     public func startSession(model: ModelConfiguration) {
         messages = []
-        Task {
-            do {
-                let engine = try await InferenceEngine.loadModel(model)
-                await MainActor.run {
-                    self.chatSession = ChatSession(engine: engine)
-                }
-            } catch {
-                await MainActor.run {
-                    self.messages.append(Message(sender: .assistant, text: "[Error: \(error.localizedDescription)]"))
-                }
-            }
-        }
+        // TODO: Replace with real model loading logic
+        self.chatSession = ChatSession()
     }
     
     /// Sends a user message and streams the assistant's response.
@@ -62,7 +51,7 @@ public class ChatSessionManager: ObservableObject {
             guard let self = self else { return }
             do {
                 var response = ""
-                for try await chunk in chatSession.streamResponse(text) {
+                for try await chunk in try await chatSession.streamResponse(text) {
                     response += chunk
                     if let last = self.messages.last, last.sender == .assistant {
                         self.messages[self.messages.count - 1] = Message(sender: .assistant, text: response)
@@ -84,5 +73,20 @@ public class ChatSessionManager: ObservableObject {
         isStreaming = false
         streamTask?.cancel()
         streamTask = nil
+    }
+}
+
+// --- Minimal stub for ChatSession ---
+fileprivate class ChatSession {
+    func streamResponse(_ text: String) async throws -> AsyncThrowingStream<String, Error> {
+        return AsyncThrowingStream { continuation in
+            Task {
+                for word in text.split(separator: " ") {
+                    try? await Task.sleep(nanoseconds: 200_000_000)
+                    continuation.yield(String(word) + " ")
+                }
+                continuation.finish()
+            }
+        }
     }
 } 

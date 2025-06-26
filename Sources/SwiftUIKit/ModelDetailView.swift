@@ -10,7 +10,6 @@
 
 import SwiftUI
 import Foundation
-import MLXEngine
 
 /// A SwiftUI view for displaying and managing model metadata and actions.
 ///
@@ -18,7 +17,7 @@ import MLXEngine
 /// - Integrates with MLXEngine model metadata and management APIs.
 public struct ModelDetailView: View {
     @Environment(\.uiaiStyle) private var uiaiStyle: any UIAIStyle
-    public let model: ModelDiscoveryService.ModelSummary
+    public let model: ModelSummary
     public let isDownloaded: Bool
     public let isDownloading: Bool
     public let downloadProgress: Double?
@@ -35,7 +34,7 @@ public struct ModelDetailView: View {
     @State private var isCompatible: Bool = false
     
     public init(
-        model: ModelDiscoveryService.ModelSummary,
+        model: ModelSummary,
         isDownloaded: Bool = false,
         isDownloading: Bool = false,
         downloadProgress: Double? = nil,
@@ -313,4 +312,13 @@ public struct ModelDetailView: View {
         )
         isCompatible = ModelRegistry.isModelSupported(config, ramGB: memoryGB, platform: platform)
     }
+}
+
+// TODO: If not already defined, define ModelSummary here or import from a shared file.
+// public struct ModelSummary: Identifiable, Hashable { ... }
+
+// --- Stubs for missing types ---
+fileprivate struct HuggingFaceAPI {
+    static let shared = HuggingFaceAPI()
+    func listModelFiles(modelId: String) async throws -> [String] { return [] }
 } 

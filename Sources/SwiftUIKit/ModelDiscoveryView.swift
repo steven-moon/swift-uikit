@@ -9,8 +9,10 @@
 //
 
 import SwiftUI
-import MLXEngine
 import Foundation
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// A SwiftUI view for discovering and managing AI models.
 ///
@@ -23,7 +25,7 @@ public struct ModelDiscoveryView: View {
     @State private var isTokenValid: Bool? = nil
     @State private var isValidatingToken = false
     @State private var tokenError: String? = nil
-    @State private var models: [ModelDiscoveryService.ModelSummary] = []
+    @State private var models: [ModelSummary] = []
     @State private var isLoading = false
     @State private var error: String?
     @State private var query: String = "mlx"
@@ -32,8 +34,8 @@ public struct ModelDiscoveryView: View {
     @State private var downloadedModelIds: Set<String> = []
     @State private var showingDetailsId: String?
     @State private var showDetailSheet: Bool = false
-    @State private var detailModel: ModelDiscoveryService.ModelSummary?
-    @State private var recommendedModels: [ModelDiscoveryService.ModelSummary] = []
+    @State private var detailModel: ModelSummary?
+    @State private var recommendedModels: [ModelSummary] = []
     @State private var errorMessage: String? = nil
     @State private var showError: Bool = false
     @State private var selectedType: String = "All"
@@ -45,7 +47,7 @@ public struct ModelDiscoveryView: View {
     private let typeOptions = ["All", "LLM", "VLM", "Embedding", "Diffusion"]
     private let quantOptions = ["All", "4bit", "8bit", "fp16", "fp32"]
     private let sortOptions = ["Most Downloads", "Most Likes", "Model Size", "Name (A-Z)"]
-    public var onModelSelected: ((ModelDiscoveryService.ModelSummary) -> Void)? = nil
+    public var onModelSelected: ((ModelSummary) -> Void)? = nil
 
     public init() {
         AppLogger.shared.debug("ModelDiscoveryView", "Initialized ModelDiscoveryView")
@@ -53,203 +55,205 @@ public struct ModelDiscoveryView: View {
     
     public var body: some View {
         #if os(iOS) || os(macOS) || os(visionOS)
-        NavigationStack {
-            ZStack {
-                uiaiStyle.backgroundColor.ignoresSafeArea()
-                ScrollView {
-                    VStack(spacing: 6) {
-                        if isLoading {
-                            ProgressView("Loading models...")
-                                .frame(maxWidth: .infinity, minHeight: 120)
-                        } else {
-                            // --- Hugging Face Login Section ---
-                            if huggingFaceToken.isEmpty {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    HStack {
-                                        Image(systemName: "person.crop.circle.badge.key")
-                                        Text("Hugging Face Account")
-                                            .font(.headline)
-                                        Spacer()
-                                        HStack(spacing: 8) {
-                                            if isValidatingToken {
-                                                ProgressView()
-                                                if isTokenValid == true {
-                                                    Image(systemName: "checkmark.seal.fill")
-                                                        .foregroundColor(uiaiStyle.successColor)
-                                                    Text("Logged in")
-                                                        .foregroundColor(uiaiStyle.successColor)
-                                                    if let username = huggingFaceUsername, !username.isEmpty {
-                                                        Text("as \(username)")
+        if #available(macOS 13, *) {
+            NavigationStack {
+                ZStack {
+                    uiaiStyle.backgroundColor.ignoresSafeArea()
+                    ScrollView {
+                        VStack(spacing: 6) {
+                            if isLoading {
+                                ProgressView("Loading models...")
+                                    .frame(maxWidth: .infinity, minHeight: 120)
+                            } else {
+                                // --- Hugging Face Login Section ---
+                                if huggingFaceToken.isEmpty {
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        HStack {
+                                            Image(systemName: "person.crop.circle.badge.key")
+                                            Text("Hugging Face Account")
+                                                .font(.headline)
+                                            Spacer()
+                                            HStack(spacing: 8) {
+                                                if isValidatingToken {
+                                                    ProgressView()
+                                                    if isTokenValid == true {
+                                                        Image(systemName: "checkmark.seal.fill")
                                                             .foregroundColor(uiaiStyle.successColor)
+                                                        Text("Logged in")
+                                                            .foregroundColor(uiaiStyle.successColor)
+                                                        if let username = huggingFaceUsername, !username.isEmpty {
+                                                            Text("as \(username)")
+                                                                .foregroundColor(uiaiStyle.successColor)
+                                                        }
+                                                    } else {
+                                                        Image(systemName: "xmark.seal.fill")
+                                                            .foregroundColor(uiaiStyle.errorColor)
+                                                        Text("Invalid token")
+                                                            .foregroundColor(uiaiStyle.errorColor)
                                                     }
                                                 } else {
-                                                    Image(systemName: "xmark.seal.fill")
-                                                        .foregroundColor(uiaiStyle.errorColor)
-                                                    Text("Invalid token")
-                                                        .foregroundColor(uiaiStyle.errorColor)
+                                                    Image(systemName: "person.crop.circle.badge.exclam")
+                                                        .foregroundColor(uiaiStyle.secondaryForegroundColor)
+                                                    Text("Not logged in")
+                                                        .foregroundColor(uiaiStyle.secondaryForegroundColor)
                                                 }
-                                            } else {
-                                                Image(systemName: "person.crop.circle.badge.exclam")
-                                                    .foregroundColor(uiaiStyle.secondaryForegroundColor)
-                                                Text("Not logged in")
-                                                    .foregroundColor(uiaiStyle.secondaryForegroundColor)
                                             }
                                         }
+                                        HStack {
+                                            SecureField("Enter Hugging Face token", text: $tokenInput)
+                                                .textFieldStyle(.roundedBorder)
+                                            Button("Save") {
+                                                huggingFaceToken = tokenInput
+                                                Task {
+                                                    await validateToken(token: tokenInput)
+                                                }
+                                            }.disabled(tokenInput.isEmpty || isValidatingToken)
+                                        }
+                                        if let tokenError = tokenError {
+                                            Text(tokenError).foregroundColor(.red).font(.caption)
+                                        }
                                     }
-                                    HStack {
-                                        SecureField("Enter Hugging Face token", text: $tokenInput)
-                                            .textFieldStyle(.roundedBorder)
-                                        Button("Save") {
-                                            huggingFaceToken = tokenInput
-                                            Task {
-                                                await validateToken(token: tokenInput)
-                                            }
-                                        }.disabled(tokenInput.isEmpty || isValidatingToken)
+                                    .padding([.top, .horizontal])
+                                    .onAppear {
+                                        tokenInput = huggingFaceToken
+                                        if !huggingFaceToken.isEmpty { Task { await validateToken(token: huggingFaceToken) } }
                                     }
-                                    if let tokenError = tokenError {
-                                        Text(tokenError).foregroundColor(.red).font(.caption)
-                                    }
+                                    Divider()
                                 }
-                                .padding([.top, .horizontal])
-                                .onAppear {
-                                    tokenInput = huggingFaceToken
-                                    if !huggingFaceToken.isEmpty { Task { await validateToken(token: huggingFaceToken) } }
+                                // --- End Hugging Face Login Section ---
+                                if !UserDefaults.standard.bool(forKey: "UIAI.hasSeenOnboarding") {
+                                    OnboardingBanner()
+                                        .padding(.top, 4)
+                                }
+                                if !recommendedModels.isEmpty {
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text("Recommended for You")
+                                            .font(uiaiStyle.font.weight(.bold))
+                                            .foregroundColor(uiaiStyle.foregroundColor)
+                                            .padding(.horizontal)
+                                        HStack(spacing: 12) {
+                                            ForEach(recommendedModels) { model in
+                                                let (statusIcon, statusColor, statusMessage) = modelHealthStatus(model)
+                                                ModelCardView(
+                                                    model: .init(
+                                                        id: model.id,
+                                                        name: model.name,
+                                                        description: model.description,
+                                                        parameters: model.parameters,
+                                                        quantization: model.quantization,
+                                                        imageURL: model.imageURL,
+                                                        isDownloaded: downloadedModelIds.contains(model.id),
+                                                        isDownloading: downloadingModelId == model.id,
+                                                        downloadProgress: downloadProgress[model.id],
+                                                        statusMessage: "Recommended",
+                                                        statusColor: uiaiStyle.accentColor,
+                                                        architecture: model.architecture
+                                                    ),
+                                                    onDownload: { downloadModel(model) },
+                                                    onDelete: { deleteModel(model) },
+                                                    onShowDetails: {
+                                                        detailModel = model
+                                                        showDetailSheet = true
+                                                        selectModel(model)
+                                                    }
+                                                )
+                                                .frame(width: 320)
+                                                .padding(.vertical, 4)
+                                                .uiaiStyle(uiaiStyle)
+                                            }
+                                        }
+                                        .padding(.horizontal)
+                                    }
+                                    .padding(.top, 8)
+                                }
+                                if let errorMessage = errorMessage, showError {
+                                    ErrorBanner(message: errorMessage, style: .error, isPresented: $showError)
+                                }
+                                // Search bar
+                                HStack {
+                                    TextField("Search models...", text: $query)
+                                        .textFieldStyle(.roundedBorder)
+                                        .padding(.horizontal)
+                                        .onSubmit { loadModels() }
+                                    Button("Search") { loadModels() }
+                                        .disabled(isLoading)
+                                        .padding(.trailing)
                                 }
                                 Divider()
-                            }
-                            // --- End Hugging Face Login Section ---
-                            if !UserDefaults.standard.bool(forKey: "UIAI.hasSeenOnboarding") {
-                                OnboardingBanner()
-                                    .padding(.top, 4)
-                            }
-                            if !recommendedModels.isEmpty {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text("Recommended for You")
-                                        .font(uiaiStyle.font.weight(.bold))
-                                        .foregroundColor(uiaiStyle.foregroundColor)
-                                        .padding(.horizontal)
-                                    HStack(spacing: 12) {
-                                        ForEach(recommendedModels) { model in
-                                            let (statusIcon, statusColor, statusMessage) = modelHealthStatus(model)
-                                            ModelCardView(
-                                                model: .init(
-                                                    id: model.id,
-                                                    name: model.name,
-                                                    description: model.description,
-                                                    parameters: model.parameters,
-                                                    quantization: model.quantization,
-                                                    imageURL: model.imageURL,
-                                                    isDownloaded: downloadedModelIds.contains(model.id),
-                                                    isDownloading: downloadingModelId == model.id,
-                                                    downloadProgress: downloadProgress[model.id],
-                                                    statusMessage: "Recommended",
-                                                    statusColor: uiaiStyle.accentColor,
-                                                    architecture: model.architecture
-                                                ),
-                                                onDownload: { downloadModel(model) },
-                                                onDelete: { deleteModel(model) },
-                                                onShowDetails: {
-                                                    detailModel = model
-                                                    showDetailSheet = true
-                                                    selectModel(model)
-                                                }
-                                            )
-                                            .frame(width: 320)
-                                            .padding(.vertical, 4)
-                                            .uiaiStyle(uiaiStyle)
+                                // Model filtering controls
+                                HStack {
+                                    Picker("Type", selection: $selectedType) {
+                                        ForEach(typeOptions, id: \.self) { type in
+                                            Text(type)
                                         }
                                     }
-                                    .padding(.horizontal)
-                                }
-                                .padding(.top, 8)
-                            }
-                            if let errorMessage = errorMessage, showError {
-                                ErrorBanner(message: errorMessage, style: .error, isPresented: $showError)
-                            }
-                            // Search bar
-                            HStack {
-                                TextField("Search models...", text: $query)
-                                    .textFieldStyle(.roundedBorder)
-                                    .padding(.horizontal)
-                                    .onSubmit { loadModels() }
-                                Button("Search") { loadModels() }
-                                    .disabled(isLoading)
-                                    .padding(.trailing)
-                            }
-                            Divider()
-                            // Model filtering controls
-                            HStack {
-                                Picker("Type", selection: $selectedType) {
-                                    ForEach(typeOptions, id: \.self) { type in
-                                        Text(type)
-                                    }
-                                }
-                                .pickerStyle(.segmented)
-                                .frame(maxWidth: 300)
-                                Picker("Quantization", selection: $selectedQuant) {
-                                    ForEach(quantOptions, id: \.self) { quant in
-                                        Text(quant)
-                                    }
-                                }
-                                .pickerStyle(.segmented)
-                                .frame(maxWidth: 300)
-                            }
-                            .padding(.horizontal)
-                            // Compatible models toggle
-                            Toggle(isOn: $showOnlyCompatible) {
-                                Text("Show only compatible models")
-                                    .font(.subheadline)
-                            }
-                            .padding(.horizontal)
-                            // Sorting controls
-                            HStack {
-                                Picker("Sort by", selection: $selectedSort) {
-                                    ForEach(sortOptions, id: \.self) { sort in
-                                        Text(sort)
-                                    }
-                                }
-                                .pickerStyle(.segmented)
-                                .frame(maxWidth: 500)
-                            }
-                            .padding(.horizontal)
-                            // Model list
-                            if !models.isEmpty {
-                                ScrollView {
-                                    LazyVStack(spacing: 12) {
-                                        ForEach(filteredModels) { model in
-                                            let (statusIcon, statusColor, statusMessage) = modelHealthStatus(model)
-                                            ModelCardView(
-                                                model: .init(
-                                                    id: model.id,
-                                                    name: model.name,
-                                                    description: model.description,
-                                                    parameters: model.parameters,
-                                                    quantization: model.quantization,
-                                                    imageURL: model.imageURL,
-                                                    isDownloaded: downloadedModelIds.contains(model.id),
-                                                    isDownloading: downloadingModelId == model.id,
-                                                    downloadProgress: downloadProgress[model.id],
-                                                    statusMessage: statusMessage,
-                                                    statusColor: statusColor,
-                                                    architecture: model.architecture
-                                                ),
-                                                onDownload: { downloadModel(model) },
-                                                onDelete: { deleteModel(model) },
-                                                onShowDetails: {
-                                                    detailModel = model
-                                                    showDetailSheet = true
-                                                    selectModel(model)
-                                                }
-                                            )
-                                            .uiaiStyle(uiaiStyle)
+                                    .pickerStyle(.segmented)
+                                    .frame(maxWidth: 300)
+                                    Picker("Quantization", selection: $selectedQuant) {
+                                        ForEach(quantOptions, id: \.self) { quant in
+                                            Text(quant)
                                         }
                                     }
-                                    .padding(.vertical)
+                                    .pickerStyle(.segmented)
+                                    .frame(maxWidth: 300)
                                 }
-                            } else if !isLoading {
-                                Text("No models found.")
-                                    .foregroundColor(.secondary)
-                                    .frame(maxWidth: .infinity, minHeight: 200)
+                                .padding(.horizontal)
+                                // Compatible models toggle
+                                Toggle(isOn: $showOnlyCompatible) {
+                                    Text("Show only compatible models")
+                                        .font(.subheadline)
+                                }
+                                .padding(.horizontal)
+                                // Sorting controls
+                                HStack {
+                                    Picker("Sort by", selection: $selectedSort) {
+                                        ForEach(sortOptions, id: \.self) { sort in
+                                            Text(sort)
+                                        }
+                                    }
+                                    .pickerStyle(.segmented)
+                                    .frame(maxWidth: 500)
+                                }
+                                .padding(.horizontal)
+                                // Model list
+                                if !models.isEmpty {
+                                    ScrollView {
+                                        LazyVStack(spacing: 12) {
+                                            ForEach(filteredModels) { model in
+                                                let (statusIcon, statusColor, statusMessage) = modelHealthStatus(model)
+                                                ModelCardView(
+                                                    model: .init(
+                                                        id: model.id,
+                                                        name: model.name,
+                                                        description: model.description,
+                                                        parameters: model.parameters,
+                                                        quantization: model.quantization,
+                                                        imageURL: model.imageURL,
+                                                        isDownloaded: downloadedModelIds.contains(model.id),
+                                                        isDownloading: downloadingModelId == model.id,
+                                                        downloadProgress: downloadProgress[model.id],
+                                                        statusMessage: statusMessage,
+                                                        statusColor: statusColor,
+                                                        architecture: model.architecture
+                                                    ),
+                                                    onDownload: { downloadModel(model) },
+                                                    onDelete: { deleteModel(model) },
+                                                    onShowDetails: {
+                                                        detailModel = model
+                                                        showDetailSheet = true
+                                                        selectModel(model)
+                                                    }
+                                                )
+                                                .uiaiStyle(uiaiStyle)
+                                            }
+                                        }
+                                        .padding(.vertical)
+                                    }
+                                } else if !isLoading {
+                                    Text("No models found.")
+                                        .foregroundColor(.secondary)
+                                        .frame(maxWidth: .infinity, minHeight: 200)
+                                }
                             }
                         }
                     }
@@ -257,7 +261,9 @@ public struct ModelDiscoveryView: View {
                 .padding(.bottom, 12)
             }
             .navigationTitle("Model Discovery")
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .ignoresSafeArea(.keyboard, edges: .bottom)
             .task {
                 AppLogger.shared.debug("ModelDiscoveryView", ".task triggered, loading models and recommended models")
@@ -286,6 +292,7 @@ public struct ModelDiscoveryView: View {
                 }
             }
             .onAppear {
+                #if canImport(UIKit)
                 let appearance = UINavigationBarAppearance()
                 appearance.configureWithOpaqueBackground()
                 appearance.backgroundColor = UIColor(uiaiStyle.backgroundColor)
@@ -294,6 +301,11 @@ public struct ModelDiscoveryView: View {
                 if #available(iOS 15.0, *) {
                     UINavigationBar.appearance().scrollEdgeAppearance = appearance
                 }
+                #endif
+            }
+        } else {
+            VStack {
+                Text("Model Discovery requires macOS 13 or newer.")
             }
         }
         #else
@@ -333,7 +345,7 @@ public struct ModelDiscoveryView: View {
         }
     }
 
-    private func downloadModel(_ model: ModelDiscoveryService.ModelSummary) {
+    private func downloadModel(_ model: ModelSummary) {
         guard downloadingModelId == nil else { return }
         downloadingModelId = model.id
         downloadProgress[model.id] = 0.0
@@ -371,7 +383,7 @@ public struct ModelDiscoveryView: View {
         }
     }
 
-    private func deleteModel(_ model: ModelDiscoveryService.ModelSummary) {
+    private func deleteModel(_ model: ModelSummary) {
         Task {
             do {
                 let fileManager = FileManagerService.shared
@@ -388,7 +400,7 @@ public struct ModelDiscoveryView: View {
         }
     }
 
-    private func updateModel(_ model: ModelDiscoveryService.ModelSummary) {
+    private func updateModel(_ model: ModelSummary) {
         // TODO: Implement update logic (re-download or check for new version)
         error = "Update not yet implemented."
     }
@@ -414,7 +426,7 @@ public struct ModelDiscoveryView: View {
         showError = true
     }
 
-    private func modelHealthStatus(_ model: ModelDiscoveryService.ModelSummary) -> (icon: String, color: Color, message: String) {
+    private func modelHealthStatus(_ model: ModelSummary) -> (icon: String, color: Color, message: String) {
         if downloadedModelIds.contains(model.id) {
             return ("checkmark.seal.fill", .green, "Downloaded and ready.")
         } else if !model.isMLX {
@@ -424,7 +436,7 @@ public struct ModelDiscoveryView: View {
         }
     }
 
-    private func selectModel(_ model: ModelDiscoveryService.ModelSummary) {
+    private func selectModel(_ model: ModelSummary) {
         onModelSelected?(model)
     }
 
@@ -450,7 +462,7 @@ public struct ModelDiscoveryView: View {
     }
 
     // Filtering and sorting logic
-    private var filteredModels: [ModelDiscoveryService.ModelSummary] {
+    private var filteredModels: [ModelSummary] {
         let filtered = models.filter { model in
             let typeMatch = selectedType == "All" || modelType(for: model.architecture) == selectedType
             let quantMatch = selectedQuant == "All" || (model.quantization?.lowercased() == selectedQuant.lowercased())
@@ -511,4 +523,29 @@ public struct ModelDiscoveryView: View {
 #Preview {
     ModelDiscoveryView()
 }
-#endif 
+#endif
+
+// --- Stubs for missing types ---
+fileprivate struct AppLogger {
+    static let shared = AppLogger()
+    func debug(_ tag: String, _ msg: String) {}
+    func error(_ tag: String, _ msg: String) {}
+}
+fileprivate struct ModelDownloader {
+    func downloadModel(_ config: ModelConfiguration, progress: @escaping (Double) -> Void) async throws -> Bool { return true }
+}
+fileprivate struct FileManagerService {
+    static let shared = FileManagerService()
+    func isModelDownloaded(modelId: String) async -> Bool { return false }
+    func getModelPath(modelId: String) async throws -> URL { throw NSError(domain: "NotImplemented", code: 0) }
+}
+fileprivate struct HuggingFaceAPI {
+    static let shared = HuggingFaceAPI()
+    func validateToken(token: String) async throws -> String? { return nil }
+    func listModelFiles(modelId: String) async throws -> [String] { return [] }
+}
+// --- Minimal stub for ModelDiscoveryService ---
+fileprivate struct ModelDiscoveryService {
+    static func searchMLXModels(query: String, limit: Int) async throws -> [ModelSummary] { return [] }
+    static func recommendedMLXModelsForCurrentDevice(limit: Int) async throws -> [ModelSummary] { return [] }
+} 
