@@ -73,7 +73,10 @@ public struct AsyncImageView: View {
 }
 
 #if DEBUG
-#Preview {
-    AsyncImageView(url: nil)
+struct AsyncImageView_Previews: PreviewProvider {
+    static var previews: some View {
+        AsyncImageView(url: nil)
+            .uiaiStyle(MinimalStyle(colorScheme: .light))
+    }
 }
 #endif 

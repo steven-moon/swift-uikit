@@ -574,7 +574,7 @@ public struct ModelDiscoveryView: View {
         Task {
             do {
                 let results = try await ModelDiscoveryService.searchMLXModels(query: query, limit: 20)
-                let downloader = ModelDownloader()
+                _ = ModelDownloader() // Use underscore to indicate intentionally unused
                 var downloaded: Set<String> = []
                 for model in results {
                     if await FileManagerService.shared.isModelDownloaded(modelId: model.id) {
@@ -772,8 +772,11 @@ public struct ModelDiscoveryView: View {
 }
 
 #if DEBUG
-#Preview {
-    ModelDiscoveryView()
+struct ModelDiscoveryView_Previews: PreviewProvider {
+    static var previews: some View {
+        ModelDiscoveryView()
+            .uiaiStyle(MinimalStyle(colorScheme: .light))
+    }
 }
 #endif
 

@@ -10,6 +10,7 @@
 
 import SwiftUI
 import Foundation
+import os
 
 /// A SwiftUI settings panel for model, generation, and app preferences.
 ///
@@ -30,6 +31,7 @@ public struct SettingsPanel: View {
     @State private var showResetConfirmation: Bool = false
     @State private var showErrorPreview: Bool = true
     @State private var showStyleGallery: Bool = false
+    private let logger = Logger(subsystem: "SwiftUIKitDemo", category: "SettingsPanel")
     
     private var selectedStyleKind: UIAIStyleKind {
         UIAIStyleKind(rawValue: selectedStyleKindRaw) ?? .minimal
@@ -44,6 +46,8 @@ public struct SettingsPanel: View {
     public init(selectedStyleKindRaw: Binding<String>, selectedColorSchemeRaw: Binding<String>) {
         self._selectedStyleKindRaw = selectedStyleKindRaw
         self._selectedColorSchemeRaw = selectedColorSchemeRaw
+        print("[SettingsPanel] init: styleKindRaw=\(selectedStyleKindRaw.wrappedValue), colorSchemeRaw=\(selectedColorSchemeRaw.wrappedValue)")
+        logger.info("[SettingsPanel] init: styleKindRaw=\(selectedStyleKindRaw.wrappedValue), colorSchemeRaw=\(selectedColorSchemeRaw.wrappedValue)")
     }
     
     public var body: some View {
@@ -124,66 +128,6 @@ public struct SettingsPanel: View {
                 .cornerRadius(12)
                 .padding(.horizontal)
 
-                // Style Section
-                Text("STYLE")
-                    .font(.caption)
-                    .foregroundColor(currentStyle.secondaryForegroundColor)
-                    .padding(.horizontal)
-                HStack {
-                    Text("UI Style")
-                        .foregroundColor(currentStyle.foregroundColor)
-                    Spacer()
-                    Picker("UI Style", selection: $selectedStyleKindRaw) {
-                        ForEach(UIAIStyleKind.allCases, id: \.self) { kind in
-                            Text(kind.rawValue.capitalized)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .onChange(of: selectedStyleKindRaw) { newValue in
-                        print("[SettingsPanel] Style kind changed to \(newValue)")
-                    }
-                }
-                .padding()
-                .background(currentStyle.backgroundColor.opacity(0.7))
-                .cornerRadius(12)
-                .padding(.horizontal)
-
-                // Color Scheme Section
-                Text("COLOR SCHEME")
-                    .font(.caption)
-                    .foregroundColor(currentStyle.secondaryForegroundColor)
-                    .padding(.horizontal)
-                HStack {
-                    Text("Color Scheme")
-                        .foregroundColor(currentStyle.foregroundColor)
-                    Spacer()
-                    Picker("Color Scheme", selection: $selectedColorSchemeRaw) {
-                        ForEach(UIAIColorScheme.allCases, id: \.self) { scheme in
-                            HStack(spacing: 8) {
-                                Circle()
-                                    .fill(MinimalStyle(colorScheme: scheme).backgroundColor)
-                                    .frame(width: 20, height: 20)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(MinimalStyle(colorScheme: scheme).accentColor, lineWidth: 2)
-                                    )
-                                Text(scheme.displayName)
-                            }
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .onTapGesture {
-                        print("Picker tapped")
-                    }
-                    .onChange(of: selectedColorSchemeRaw) { newValue in
-                        print("Color scheme changed to: \(newValue)")
-                    }
-                }
-                .padding()
-                .background(currentStyle.backgroundColor.opacity(0.7))
-                .cornerRadius(12)
-                .padding(.horizontal)
-
                 // App Preferences Section
                 Text("APP PREFERENCES")
                     .font(.caption)
@@ -224,6 +168,10 @@ public struct SettingsPanel: View {
         .sheet(isPresented: $showStyleGallery) {
             StyleGallery()
         }
+        .onAppear {
+            print("[SettingsPanel] body: styleKindRaw=\(selectedStyleKindRaw), colorSchemeRaw=\(selectedColorSchemeRaw)")
+            logger.info("[SettingsPanel] body: styleKindRaw=\(selectedStyleKindRaw), colorSchemeRaw=\(selectedColorSchemeRaw)")
+        }
         #else
         Text("Settings panel is not yet available on this platform.")
             .foregroundColor(currentStyle.secondaryForegroundColor)
@@ -241,25 +189,16 @@ public struct SettingsPanel: View {
 }
 
 #if DEBUG
-#Preview {
-    ScrollView {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 320), spacing: 24)], spacing: 24) {
-            ForEach(UIAIColorScheme.allCases, id: \.self) { scheme in
-                VStack(spacing: 8) {
-                    Text(scheme.displayName)
-                        .font(.headline)
-                    SettingsPanel(selectedStyleKindRaw: .constant(UIAIStyleKind.minimal.rawValue), selectedColorSchemeRaw: .constant(UIAIColorScheme.light.rawValue))
-                        .environment(\ .uiaiStyle, MinimalStyle(colorScheme: scheme))
-                        .frame(width: 340, height: 420)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .shadow(radius: 4)
-                }
-                .padding()
+struct SettingsPanel_Previews: PreviewProvider {
+    static var previews: some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 320), spacing: 24)], spacing: 24) {
+                SettingsPanel(selectedStyleKindRaw: .constant(UIAIStyleKind.minimal.rawValue), selectedColorSchemeRaw: .constant(UIAIColorScheme.light.rawValue))
+                    .uiaiStyle(MinimalStyle(colorScheme: .light))
             }
+            .padding()
         }
-        .padding()
     }
-    .previewLayout(.sizeThatFits)
 }
 #endif
 

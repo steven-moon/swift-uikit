@@ -82,14 +82,18 @@ public struct ErrorBanner: View {
 }
 
 #if DEBUG
-#Preview {
-    @State var show = true
-    return VStack {
-        ErrorBanner(message: "Something went wrong!", style: .error, isPresented: $show)
-        ErrorBanner(message: "This is a warning.", style: .warning, isPresented: .constant(true))
-        ErrorBanner(message: "FYI: All systems go.", style: .info, isPresented: .constant(true))
+struct ErrorBanner_Previews: PreviewProvider {
+    static var previews: some View {
+        @State var show = true
+        return VStack {
+            ErrorBanner(
+                message: "Failed to connect to the server. Please check your internet connection and try again.",
+                style: .error,
+                isPresented: $show
+            )
+            Spacer()
+        }
+        .uiaiStyle(MinimalStyle(colorScheme: .light))
     }
-    .padding()
-    .previewLayout(.sizeThatFits)
 }
 #endif 

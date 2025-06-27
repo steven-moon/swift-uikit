@@ -49,21 +49,22 @@ private struct DemoMessage: Identifiable, Hashable {
     let sender: String
     let text: String
 }
-#Preview {
-    ChatHistoryView(messages: [
-        DemoMessage(sender: "assistant", text: "Hello!"),
-        DemoMessage(sender: "user", text: "Hi there!"),
-        DemoMessage(sender: "assistant", text: "How can I help?")
-    ]) { msg in
-        AnyView(
-            HStack {
-                Text("\(msg.sender):")
-                    .fontWeight(.bold)
-                Text(msg.text)
-            }
-        )
+
+struct ChatHistoryView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChatHistoryView(messages: [
+            DemoMessage(sender: "assistant", text: "Hello!"),
+            DemoMessage(sender: "user", text: "Hi there!")
+        ]) { message in
+            AnyView(
+                HStack {
+                    Text("\(message.sender):")
+                        .fontWeight(.bold)
+                    Text(message.text)
+                }
+            )
+        }
+        .uiaiStyle(MinimalStyle(colorScheme: .light))
     }
-    .frame(height: 200)
-    .previewLayout(.sizeThatFits)
 }
 #endif 

@@ -2,29 +2,52 @@ import SwiftUI
 import SwiftUIKit
 
 struct ContentView: View {
+    @AppStorage("selectedStyleKind") private var selectedStyleKindRaw: String = UIAIStyleKind.minimal.rawValue
+    @AppStorage("selectedColorScheme") private var selectedColorSchemeRaw: String = UIAIColorScheme.light.rawValue
+    @Environment(\.uiaiStyle) private var uiaiStyle: any UIAIStyle
+    
+    private var selectedStyleKind: UIAIStyleKind {
+        UIAIStyleKind(rawValue: selectedStyleKindRaw) ?? .minimal
+    }
+    
+    private var selectedColorScheme: UIAIColorScheme {
+        UIAIColorScheme(rawValue: selectedColorSchemeRaw) ?? .light
+    }
+    
     var body: some View {
         #if os(watchOS)
         List {
-            NavigationLink("Chat", destination: ChatView().uiaiStyle(MinimalStyle(colorScheme: .light)))
-            NavigationLink("Models", destination: ModelDiscoveryView().uiaiStyle(MinimalStyle(colorScheme: .light)))
-            NavigationLink("Settings", destination: SettingsPanel(selectedStyleKindRaw: .constant(UIAIStyleKind.minimal.rawValue), selectedColorSchemeRaw: .constant(UIAIColorScheme.light.rawValue)).uiaiStyle(MinimalStyle(colorScheme: .light)))
-            NavigationLink("Styles", destination: StyleGallery().uiaiStyle(MinimalStyle(colorScheme: .light)))
+            NavigationLink("Appearance", destination: AppearanceSettingsView(selectedStyleKindRaw: $selectedStyleKindRaw, selectedColorSchemeRaw: $selectedColorSchemeRaw))
+            NavigationLink("Components", destination: ComponentsShowcaseView())
+            NavigationLink("Examples", destination: ExamplesView())
+            NavigationLink("Settings", destination: SettingsPanel(selectedStyleKindRaw: $selectedStyleKindRaw, selectedColorSchemeRaw: $selectedColorSchemeRaw))
         }
         .navigationTitle("SwiftUIKit Demo")
         #else
         TabView {
-            ChatView()
-                .tabItem { Label("Chat", systemImage: "bubble.left.and.bubble.right") }
-                .uiaiStyle(MinimalStyle(colorScheme: .light))
-            ModelDiscoveryView()
-                .tabItem { Label("Models", systemImage: "cube") }
-                .uiaiStyle(MinimalStyle(colorScheme: .light))
-            SettingsPanel(selectedStyleKindRaw: .constant(UIAIStyleKind.minimal.rawValue), selectedColorSchemeRaw: .constant(UIAIColorScheme.light.rawValue))
-                .tabItem { Label("Settings", systemImage: "gear") }
-                .uiaiStyle(MinimalStyle(colorScheme: .light))
-            StyleGallery()
-                .tabItem { Label("Styles", systemImage: "paintpalette") }
-                .uiaiStyle(MinimalStyle(colorScheme: .light))
+            // Default tab: Appearance - Showcase the theming system
+            AppearanceSettingsView(selectedStyleKindRaw: $selectedStyleKindRaw, selectedColorSchemeRaw: $selectedColorSchemeRaw)
+                .tabItem { 
+                    Label("Appearance", systemImage: "paintpalette.fill") 
+                }
+            
+            // Components showcase - Universal UI components
+            ComponentsShowcaseView()
+                .tabItem { 
+                    Label("Components", systemImage: "square.grid.2x2.fill") 
+                }
+            
+            // Examples - Real-world usage
+            ExamplesView()
+                .tabItem { 
+                    Label("Examples", systemImage: "doc.text.fill") 
+                }
+            
+            // Settings - App configuration
+            SettingsPanel(selectedStyleKindRaw: $selectedStyleKindRaw, selectedColorSchemeRaw: $selectedColorSchemeRaw)
+                .tabItem { 
+                    Label("Settings", systemImage: "gear") 
+                }
         }
         #endif
     }
@@ -33,5 +56,6 @@ struct ContentView: View {
 #if DEBUG
 #Preview {
     ContentView()
+        .uiaiStyle(MinimalStyle(colorScheme: .light))
 }
 #endif 

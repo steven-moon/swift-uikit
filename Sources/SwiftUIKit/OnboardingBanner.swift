@@ -69,8 +69,10 @@ public struct OnboardingBanner: View {
 }
 
 #if DEBUG
-#Preview {
-    OnboardingBanner()
-        .previewLayout(.sizeThatFits)
+struct OnboardingBanner_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingBanner()
+            .uiaiStyle(MinimalStyle(colorScheme: .light))
+    }
 }
 #endif 

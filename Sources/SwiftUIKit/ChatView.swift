@@ -89,7 +89,11 @@ public struct ChatView: View {
                     )
                 }
                 Divider()
-                ChatInputView(text: $inputText, onSend: sendMessage)
+                ChatInputView(text: $inputText, onSend: {
+                    Task {
+                        await sendMessage()
+                    }
+                })
                     .disabled(manager.isStreaming)
                 if manager.isStreaming {
                     HStack {
@@ -131,11 +135,11 @@ public struct ChatView: View {
         #endif
     }
     
-    private func sendMessage() {
+    private func sendMessage() async {
         let trimmed = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
         do {
-            manager.sendMessage(trimmed)
+            try await manager.sendMessage(trimmed)
             inputText = ""
             isInputFocused = true
         } catch {
@@ -146,9 +150,11 @@ public struct ChatView: View {
 }
 
 #if DEBUG
-#Preview {
-    ChatView()
-        .frame(height: 400)
-        .previewLayout(.sizeThatFits)
+struct ChatView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChatView()
+            .frame(height: 400)
+            .uiaiStyle(MinimalStyle(colorScheme: .light))
+    }
 }
 #endif 

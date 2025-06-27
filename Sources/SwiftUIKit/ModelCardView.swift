@@ -165,12 +165,7 @@ public struct ModelCardView: View {
     }
     
     private func handleAction(_ action: (() -> Void)?) {
-        do {
-            action?()
-        } catch {
-            errorMessage = error.localizedDescription
-            showError = true
-        }
+        action?()
     }
     
     private func modelType(for architecture: String?) -> String? {
@@ -224,24 +219,25 @@ public struct ModelCardView: View {
 }
 
 #if DEBUG
-#Preview {
-    ModelCardView(
-        model: .init(
-            id: "qwen-0.5b",
-            name: "Qwen 0.5B Chat",
-            description: "Small, fast chat model for testing and quick responses.",
-            parameters: "0.5B",
-            quantization: "4bit",
-            imageURL: nil,
-            isDownloaded: false,
-            isDownloading: true,
-            downloadProgress: 0.42
-        ),
-        onDownload: {},
-        onDelete: {},
-        onShowDetails: {}
-    )
-    .padding()
-    .previewLayout(.sizeThatFits)
+struct ModelCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        ModelCardView(
+            model: .init(
+                id: "test-model",
+                name: "Test Model",
+                description: "A test model for previews",
+                parameters: "1.2B",
+                quantization: "4bit",
+                imageURL: nil,
+                isDownloaded: false,
+                isDownloading: false,
+                architecture: "llama"
+            ),
+            onDownload: { print("Download tapped") },
+            onDelete: { print("Delete tapped") },
+            onShowDetails: { print("Details tapped") }
+        )
+        .uiaiStyle(MinimalStyle(colorScheme: .light))
+    }
 }
 #endif 

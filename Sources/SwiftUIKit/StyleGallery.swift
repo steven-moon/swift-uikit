@@ -51,7 +51,10 @@ public struct StyleGallery: View {
 }
 
 #if DEBUG
-#Preview {
-    StyleGallery()
+struct StyleGallery_Previews: PreviewProvider {
+    static var previews: some View {
+        StyleGallery()
+            .uiaiStyle(MinimalStyle(colorScheme: .light))
+    }
 }
 #endif 

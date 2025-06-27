@@ -66,12 +66,14 @@ public struct ModelSuggestionBanner: View {
 }
 
 #if DEBUG
-#Preview {
-    ModelSuggestionBanner(
-        modelName: "Qwen 0.5B Chat",
-        modelDescription: "Recommended for your device: fast, efficient, and accurate.",
-        onSelect: {}
-    )
-    .previewLayout(.sizeThatFits)
+struct ModelSuggestionBanner_Previews: PreviewProvider {
+    static var previews: some View {
+        ModelSuggestionBanner(
+            modelName: "Qwen 0.5B Chat",
+            modelDescription: "A small, fast chat model perfect for quick responses and testing.",
+            onSelect: { print("Use Model tapped") }
+        )
+        .uiaiStyle(MinimalStyle(colorScheme: .light))
+    }
 }
 #endif 

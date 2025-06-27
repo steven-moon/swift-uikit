@@ -67,9 +67,11 @@ public struct ChatInputView: View {
 }
 
 #if DEBUG
-#Preview {
-    @State var text = ""
-    return ChatInputView(text: $text, onSend: { print("Send: \(text)") })
-        .previewLayout(.sizeThatFits)
+struct ChatInputView_Previews: PreviewProvider {
+    static var previews: some View {
+        @State var text = ""
+        return ChatInputView(text: $text, onSend: { print("Send: \(text)") })
+            .uiaiStyle(MinimalStyle(colorScheme: .light))
+    }
 }
 #endif 

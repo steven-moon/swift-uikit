@@ -41,8 +41,10 @@ public class ChatSessionManager: ObservableObject {
     }
     
     /// Sends a user message and streams the assistant's response.
-    public func sendMessage(_ text: String) {
-        guard let chatSession = chatSession else { return }
+    public func sendMessage(_ text: String) async throws {
+        guard let chatSession = chatSession else { 
+            throw ChatError.noActiveSession 
+        }
         let userMsg = Message(sender: .user, text: text)
         messages.append(userMsg)
         isStreaming = true
@@ -87,6 +89,18 @@ fileprivate class ChatSession {
                 }
                 continuation.finish()
             }
+        }
+    }
+}
+
+// --- Error types ---
+public enum ChatError: Error, LocalizedError {
+    case noActiveSession
+    
+    public var errorDescription: String? {
+        switch self {
+        case .noActiveSession:
+            return "No active chat session"
         }
     }
 } 

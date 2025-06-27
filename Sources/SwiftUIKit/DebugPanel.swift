@@ -144,10 +144,12 @@ public struct DebugPanel: View {
 }
 
 #if DEBUG
-#Preview {
-    DebugPanel()
-        .frame(width: 400, height: 500)
-        .previewLayout(.sizeThatFits)
+struct DebugPanel_Previews: PreviewProvider {
+    static var previews: some View {
+        DebugPanel()
+            .frame(width: 400, height: 500)
+            .uiaiStyle(MinimalStyle(colorScheme: .light))
+    }
 }
 #endif
 
