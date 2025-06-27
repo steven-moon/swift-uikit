@@ -1,4 +1,4 @@
-# Xcode, iOS Simulator & Cursor: Productivity Tips for MLXEngine
+# Xcode, iOS Simulator & Cursor: Productivity Tips for SwiftUIKit
 
 ---
 
@@ -39,7 +39,7 @@
 
 ---
 
-## 2. Building, Running & Debugging SwiftUI Apps
+## 2. Building, Running & Debugging SwiftUIKit
 
 - **Clean builds:**
   ```bash
@@ -49,8 +49,8 @@
   ```
 - **Xcode build for iOS Simulator:**
   ```bash
-  xcodebuild -scheme MLXChatApp-iOS \
-    -workspace MLXChatApp/MLXChatApp.xcodeproj/project.xcworkspace \
+  xcodebuild -scheme SwiftUIKitDemo-iOS \
+    -workspace DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace \
     -destination 'platform=iOS Simulator,name=iPhone 16' build
   ```
 - **Run tests with coverage:**
@@ -176,15 +176,15 @@
 - [Xcode Release Notes](https://developer.apple.com/documentation/xcode-release-notes)
 - [SwiftUI Performance Best Practices](https://developer.apple.com/documentation/swiftui/performance)
 - [Fastlane for iOS](https://docs.fastlane.tools/getting-started/ios/setup/)
-- [UIAI/MLXEngine SwiftUI Development & Troubleshooting Guide](UIAI_Development_Troubleshooting.md)
+- [SwiftUIKit Package Specification](_docs/SwiftUIKit_Package_Specification.md)
 - [Cursor Docs](https://docs.cursor.com/)
 
 ---
 
 ## 11. FAQ
 
-**Q: Why is my app slow in Simulator?**
-- Simulator is not as fast as real devices, especially for GPU/ML workloads. Try smaller models, close other apps, and profile with Instruments.
+**Q: Why is my SwiftUIKit demo app slow in Simulator?**
+- Simulator is not as fast as real devices, especially for complex UI components. Try closing other apps and profile with Instruments.
 
 **Q: How do I test push notifications?**
 - Use `xcrun simctl push booted <bundle-id> payload.apns` with a valid APNS payload.
@@ -203,113 +203,54 @@
 
 ---
 
-## 12. Best Practices for Model Development
+## 12. Best Practices for SwiftUIKit Development
 
-- **Keep model download logic in `ModelDownloader`**—never spread across files.
-- **Use Swift Concurrency** (`async/await`, `AsyncSequence`) for all async work.
-- **Maintain `ModelRegistry.swift`** for static model configs; do not hard-code IDs elsewhere.
-- **Unit tests**: Test only the public API; use `MockLLMEngine` for simulator CI.
-
----
-
-## SwiftUIKit Migration & Cleanup Plan 2024
-
-### 1. Project State Review
-
-#### What's Present
-- **Source Files:** All major SwiftUI components (chat, model cards, banners, settings, style system, etc.) are in `Sources/SwiftUIKit/`.
-- **Docs:** `_docs/SwiftUIKit_Package_Specification.md` describes the vision, architecture, and API surface.
-- **Migration Scripts:** `migrate_from_mlxengine.sh` and `run_full_swiftuikit_migration.sh` automate copying files from the old MLXEngine repo.
-- **References to MLXEngine:** Many files import and use `MLXEngine` types (e.g., `ModelConfiguration`, `InferenceEngine`, `ChatSession`, etc.).
-
-#### What's Missing/To-Do
-- **Standalone Swift Package Manifest:** No `Package.swift` yet.
-- **Tests:** No test files or test targets.
-- **MLXEngine Decoupling:** Many files still reference MLXEngine types and APIs.
-- **Public API Surface:** Needs review to ensure only intended types are public.
-- **CI/Linting:** No config for formatting/linting or CI.
-- **README:** No top-level README for the new package.
+- **Use the `UIAIStyle` protocol** for all style/theme logic.
+- **Inject the current style** at the app root with `.uiaiStyle(...)`.
+- **Use `@Environment(\.uiaiStyle)`** in all SwiftUIKit components.
+- **Register custom styles** with `UIAIStyleRegistry.register(...)`.
+- **Never hard-code style IDs** outside the registry.
+- **Use `any UIAIStyle`** for protocol-typed values (Swift 6+).
 
 ---
 
-### 2. Migration & Cleanup Plan
+## 13. SwiftUIKit Agent Development Workflow
 
-#### A. Remove MLXEngine Dependencies
-- **Goal:** Make the package backend-agnostic and usable in any SwiftUI app.
-- **Actions:**
-  - Remove all `import MLXEngine` and any direct use of MLXEngine types.
-  - Replace types like `ModelConfiguration`, `InferenceEngine`, `ChatSession`, etc., with protocol-based abstractions or stubs.
-  - Move any model download, inference, or chat logic behind protocols or dependency injection.
-  - For demo/previews, use mock data and simple stubs.
+### **Automatic Workflow Commands**
 
-#### B. Refactor for Standalone Use
-- **Goal:** Ensure all components are self-contained and only depend on SwiftUI/Foundation.
-- **Actions:**
-  - Audit all files for any lingering MLXEngine or app-specific code.
-  - Move any app-specific logic (e.g., user defaults keys, onboarding flags) to generic names.
-  - Ensure all public APIs are documented and minimal.
+The agent automatically runs these commands after code changes:
 
-#### C. Set Up Swift Package Structure
-- **Goal:** Make the repo a valid, distributable Swift package.
-- **Actions:**
-  - Add a `Package.swift` manifest with a library target for `SwiftUIKit`.
-  - Organize sources under `Sources/SwiftUIKit/`.
-  - Add a `Tests/SwiftUIKitTests/` directory with at least one basic test.
+```bash
+# Build SwiftUIKit demo app
+./swiftuikit_dev_workflow.sh build-ios
 
-#### D. Documentation & Examples
-- **Goal:** Make the package easy to use and understand.
-- **Actions:**
-  - Add a top-level `README.md` with installation, usage, and customization instructions.
-  - Ensure `_docs/SwiftUIKit_Package_Specification.md` is up to date.
-  - Add SwiftUI Previews for all components.
+# Run SwiftUIKit tests
+./swiftuikit_dev_workflow.sh test
 
-#### E. Linting, Formatting, and CI
-- **Goal:** Enforce code style and quality.
-- **Actions:**
-  - Add a `.swiftformat` or `.swiftlint.yml` config (per your rules, use `swift-format`).
-  - Add a basic GitHub Actions workflow for build and test.
+# Complete development cycle
+./swiftuikit_dev_workflow.sh full-cycle
 
----
+# Monitor simulator logs
+./swiftuikit_dev_workflow.sh monitor
+```
 
-### 3. Step-by-Step Execution Plan
+### **Project-Specific Configuration**
 
-#### Step 1: Remove MLXEngine Imports and Types
-- Search for `import MLXEngine` and all MLXEngine types/usages.
-- Replace with protocols, stubs, or remove as appropriate.
+- **Demo App**: SwiftUIKitDemo
+- **Build Scheme**: SwiftUIKitDemo-iOS
+- **Workspace**: DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace
+- **Simulator**: iPhone 16 (iOS 17.0)
+- **Log Process**: SwiftUIKitDemo
 
-#### Step 2: Refactor Data Models and APIs
-- Replace `ModelConfiguration`, `ChatSession`, etc., with generic equivalents or protocols.
-- For any async/model logic, provide protocol-based hooks or demo stubs.
+### **Development Workflow**
 
-#### Step 3: Add `Package.swift`
-- Create a manifest that defines a library product for `SwiftUIKit`.
-
-#### Step 4: Audit Public API
-- Ensure only intended types are `public`.
-- Add `///` doc-comments to all public symbols.
-
-#### Step 5: Add Tests
-- Create a `Tests/SwiftUIKitTests/` directory.
-- Add at least one test file that imports and instantiates a component.
-
-#### Step 6: Add README and Update Docs
-- Write a `README.md` with install and usage instructions.
-- Ensure `_docs/SwiftUIKit_Package_Specification.md` is current.
-
-#### Step 7: Add Linting/Formatting
-- Add a config for `swift-format`.
-- Optionally add a GitHub Actions workflow for CI.
+1. **Code Changes** → Agent detects file saves
+2. **Build** → Compile SwiftUIKit package and demo app
+3. **Test** → Run SwiftUIKitTests
+4. **Simulate** → Launch demo app in simulator
+5. **Monitor** → Stream app logs for debugging
+6. **Report** → Provide status and next steps
 
 ---
 
-### 4. Next Actions
-
-**Would you like to start with:**
-- (A) Automated removal of all `MLXEngine` references and stubbing out dependencies?
-- (B) Creating the `Package.swift` manifest and basic test target?
-- (C) Both in parallel?
-
-Let me know your preference, or proceed with (A) first, as it's the most critical for decoupling and getting the package to build.
-
----
-*Last updated: 2024-06-27* 
+*Last updated: 2025-06-27* 
