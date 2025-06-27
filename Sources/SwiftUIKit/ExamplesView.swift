@@ -1,12 +1,31 @@
 import SwiftUI
 import Foundation
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
 public struct ExamplesView: View {
     @Environment(\.uiaiStyle) private var uiaiStyle: any UIAIStyle
     
     public init() {}
     
     public var body: some View {
+        #if os(iOS)
+        content
+            .background(uiaiStyle.backgroundColor.ignoresSafeArea())
+            .navigationTitle("Examples")
+            .navigationBarTitleDisplayMode(.large)
+        #else
+        content
+            .background(uiaiStyle.backgroundColor.ignoresSafeArea())
+            .navigationTitle("Examples")
+        #endif
+    }
+    
+    private var content: some View {
         NavigationView {
             ScrollView {
                 LazyVStack(spacing: 32) {
@@ -19,9 +38,6 @@ public struct ExamplesView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 24)
             }
-            .background(uiaiStyle.backgroundColor.ignoresSafeArea())
-            .navigationTitle("Examples")
-            .navigationBarTitleDisplayMode(.large)
         }
     }
     
@@ -266,8 +282,18 @@ public struct ExamplesView: View {
             .disabled(!isInStock)
         }
         .padding(8)
-        .background(Color(.systemBackground).opacity(0.7))
+        .background(backgroundColor.opacity(0.7))
         .cornerRadius(12)
+    }
+    
+    private var backgroundColor: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemBackground)
+        #elseif canImport(AppKit)
+        return Color(NSColor.windowBackgroundColor)
+        #else
+        return Color.secondary.opacity(0.1)
+        #endif
     }
 }
 

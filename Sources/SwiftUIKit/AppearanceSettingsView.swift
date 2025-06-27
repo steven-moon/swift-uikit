@@ -1,26 +1,36 @@
 import SwiftUI
 import Foundation
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
 public struct AppearanceSettingsView: View {
-    @Binding var selectedStyleKindRaw: String
-    @Binding var selectedColorSchemeRaw: String
+    @Binding public var selectedStyleKindRaw: String
+    @Binding public var selectedColorSchemeRaw: String
     @Environment(\.dismiss) private var dismiss
     
+    @State private var tempStyleKind: UIAIStyleKind?
+    @State private var tempColorScheme: UIAIColorScheme?
+    
+    private var styleKinds: [UIAIStyleKind] = UIAIStyleKind.allCases
+    private var colorSchemes: [UIAIColorScheme] = UIAIColorScheme.allCases
+    
     private var selectedStyleKind: UIAIStyleKind {
-        UIAIStyleKind(rawValue: selectedStyleKindRaw) ?? .minimal
+        get { UIAIStyleKind(rawValue: selectedStyleKindRaw) ?? .minimal }
+        set { selectedStyleKindRaw = newValue.rawValue }
     }
+    
     private var selectedColorScheme: UIAIColorScheme {
-        UIAIColorScheme(rawValue: selectedColorSchemeRaw) ?? .light
+        get { UIAIColorScheme(rawValue: selectedColorSchemeRaw) ?? .light }
+        set { selectedColorSchemeRaw = newValue.rawValue }
     }
+    
     private var currentStyle: any UIAIStyle {
         UIAIStyleRegistry.style(for: selectedStyleKind, colorScheme: selectedColorScheme)
     }
-    
-    @State private var tempStyleKind: UIAIStyleKind? = nil
-    @State private var tempColorScheme: UIAIColorScheme? = nil
-    
-    private let styleKinds: [UIAIStyleKind] = UIAIStyleKind.allCases
-    private let colorSchemes: [UIAIColorScheme] = UIAIColorScheme.allCases
     
     public init(selectedStyleKindRaw: Binding<String>, selectedColorSchemeRaw: Binding<String>) {
         self._selectedStyleKindRaw = selectedStyleKindRaw
@@ -28,50 +38,34 @@ public struct AppearanceSettingsView: View {
     }
     
     public var body: some View {
-        VStack(spacing: 32) {
-            Text("Appearance")
-                .font(.title.bold())
-                .padding(.top, 16)
+        VStack(alignment: .leading, spacing: 32) {
+            header
             stylePicker
             colorSchemePicker
-            previewCard
             Spacer()
             actionButtons
         }
-        .background(Color(.systemGroupedBackground).ignoresSafeArea())
+        .background(systemGroupedBackgroundColor.ignoresSafeArea())
         .onAppear {
             tempStyleKind = selectedStyleKind
             tempColorScheme = selectedColorScheme
         }
     }
     
+    private var header: some View {
+        Text("Appearance")
+            .font(.title.bold())
+            .padding(.top, 16)
+    }
+    
     private var stylePicker: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
                 ForEach(styleKinds, id: \.self) { kind in
-                    Button(action: {
-                        tempStyleKind = kind
-                    }) {
-                        HStack(spacing: 8) {
-                            Image(systemName: kind.iconName)
-                                .foregroundColor(kind == (tempStyleKind ?? selectedStyleKind) ? .white : .primary)
-                            Text(kind.displayName)
-                                .font(.headline)
-                                .foregroundColor(kind == (tempStyleKind ?? selectedStyleKind) ? .white : .primary)
-                        }
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 18)
-                        .background(kind == (tempStyleKind ?? selectedStyleKind) ? Color.accentColor : Color(.systemGray6))
-                        .cornerRadius(16)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(kind == (tempStyleKind ?? selectedStyleKind) ? Color.accentColor : Color.clear, lineWidth: 2)
-                        )
-                        .shadow(color: kind == (tempStyleKind ?? selectedStyleKind) ? Color.accentColor.opacity(0.2) : .clear, radius: 4, x: 0, y: 2)
-                    }
+                    styleButton(for: kind)
                 }
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal)
         }
     }
     
@@ -79,62 +73,15 @@ public struct AppearanceSettingsView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
                 ForEach(colorSchemes, id: \.self) { scheme in
-                    Button(action: {
-                        tempColorScheme = scheme
-                    }) {
-                        HStack(spacing: 8) {
-                            Circle()
-                                .fill(UIAIStyleRegistry.style(for: tempStyleKind ?? selectedStyleKind, colorScheme: scheme).accentColor)
-                                .frame(width: 28, height: 28)
-                                .overlay(
-                                    Circle()
-                                        .stroke(scheme == (tempColorScheme ?? selectedColorScheme) ? Color.accentColor : Color.clear, lineWidth: 3)
-                                )
-                            Text(scheme.displayName)
-                                .font(.subheadline)
-                                .foregroundColor(scheme == (tempColorScheme ?? selectedColorScheme) ? .accentColor : .primary)
-                        }
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 12)
-                        .background(scheme == (tempColorScheme ?? selectedColorScheme) ? Color.accentColor.opacity(0.1) : Color(.systemGray6))
-                        .cornerRadius(14)
-                    }
+                    colorSchemeButton(for: scheme)
                 }
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal)
         }
-    }
-    
-    private var previewCard: some View {
-        VStack(spacing: 16) {
-            Text((tempStyleKind ?? selectedStyleKind).displayName)
-                .font(.title2.bold())
-                .foregroundColor(currentStyle.accentColor)
-            ModelCardView(model: .init(
-                id: "preview",
-                name: "Preview Model",
-                description: "A preview model for style and color.",
-                parameters: "1.2B",
-                quantization: "4bit",
-                imageURL: nil,
-                isDownloaded: false,
-                isDownloading: false,
-                downloadProgress: nil,
-                statusMessage: "Preview",
-                statusColor: currentStyle.accentColor,
-                architecture: "llama"
-            ))
-            ErrorBanner(message: "Preview error banner.", style: .error, isPresented: .constant(true))
-        }
-        .padding(24)
-        .background(Color(.systemBackground))
-        .cornerRadius(28)
-        .shadow(color: Color.black.opacity(0.08), radius: 16, x: 0, y: 8)
-        .padding(.horizontal, 16)
     }
     
     private var actionButtons: some View {
-        HStack {
+        VStack(spacing: 16) {
             Button(action: {
                 tempStyleKind = nil
                 tempColorScheme = nil
@@ -172,14 +119,111 @@ public struct AppearanceSettingsView: View {
                     .fontWeight(.regular)
                     .padding(.vertical, 10)
                     .padding(.horizontal, 20)
-                    .background(Color(.systemGray5))
+                    .background(systemGray5Color)
                     .foregroundColor(.primary)
                     .cornerRadius(12)
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 24)
+        .padding(24)
+        .background(systemBackgroundColor)
+        .cornerRadius(28)
+        .shadow(color: Color.black.opacity(0.08), radius: 16, x: 0, y: 8)
     }
+    
+    private func styleButton(for kind: UIAIStyleKind) -> some View {
+        Button {
+            tempStyleKind = kind
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: kind.iconName)
+                    .foregroundColor(kind == (tempStyleKind ?? selectedStyleKind) ? .white : .primary)
+                Text(kind.displayName)
+                    .font(.headline)
+                    .foregroundColor(kind == (tempStyleKind ?? selectedStyleKind) ? .white : .primary)
+            }
+            .padding(.vertical, 10)
+            .padding(.horizontal, 18)
+            .background(kind == (tempStyleKind ?? selectedStyleKind) ? Color.accentColor : systemGray6Color)
+            .cornerRadius(16)
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(kind == (tempStyleKind ?? selectedStyleKind) ? Color.accentColor : Color.clear, lineWidth: 2)
+            )
+            .shadow(color: kind == (tempStyleKind ?? selectedStyleKind) ? Color.accentColor.opacity(0.2) : .clear, radius: 4, x: 0, y: 2)
+        }
+    }
+    
+    private func colorSchemeButton(for scheme: UIAIColorScheme) -> some View {
+        Button {
+            tempColorScheme = scheme
+        } label: {
+            VStack {
+                Text(scheme.displayName)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+            }
+            .padding(.vertical, 10)
+            .padding(.horizontal, 20)
+            .background(systemGray5Color)
+            .foregroundColor(.primary)
+            .cornerRadius(12)
+        }
+        .buttonStyle(.plain)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(tempColorScheme == scheme ? Color.blue : Color.clear, lineWidth: 2)
+        )
+    }
+}
+
+// MARK: - Platform Colors
+private extension AppearanceSettingsView {
+    var systemGroupedBackgroundColor: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemGroupedBackground)
+        #elseif canImport(AppKit)
+        return Color(NSColor.windowBackgroundColor)
+        #else
+        return Color.secondary.opacity(0.2)
+        #endif
+    }
+    
+    var systemBackgroundColor: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemBackground)
+        #elseif canImport(AppKit)
+        return Color(NSColor.windowBackgroundColor)
+        #else
+        return Color.white
+        #endif
+    }
+    
+    var systemGray5Color: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemGray5)
+        #elseif canImport(AppKit)
+        return Color(NSColor.controlBackgroundColor)
+        #else
+        return Color.gray.opacity(0.2)
+        #endif
+    }
+    
+    var systemGray6Color: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.systemGray6)
+        #elseif canImport(AppKit)
+        return Color(NSColor.controlBackgroundColor)
+        #else
+        return Color.gray.opacity(0.1)
+        #endif
+    }
+}
+
+#Preview {
+    AppearanceSettingsView(
+        selectedStyleKindRaw: .constant(UIAIStyleKind.minimal.rawValue),
+        selectedColorSchemeRaw: .constant(UIAIColorScheme.light.rawValue)
+    )
 }
 
 // MARK: - Helpers for display names and icons

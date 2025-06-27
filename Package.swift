@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.9
 // Package.swift for SwiftUIKit
 //
 // A cross-platform SwiftUI component library for AI-native and general apps.
@@ -9,8 +9,8 @@ import PackageDescription
 let package = Package(
     name: "SwiftUIKit",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v12),
+        .iOS(.v16),
+        .macOS(.v14),
         .tvOS(.v15),
         .watchOS(.v8)
     ],

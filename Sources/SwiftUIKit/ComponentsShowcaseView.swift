@@ -4,27 +4,40 @@ import Foundation
 public struct ComponentsShowcaseView: View {
     @Environment(\.uiaiStyle) private var uiaiStyle: any UIAIStyle
     
+    @State private var chatText: String = ""
+    @State private var isGenerating: Bool = false
+    
     public init() {}
     
     public var body: some View {
-        NavigationView {
-            ScrollView {
-                LazyVStack(spacing: 32) {
-                    headerSection
-                    cardsSection
-                    buttonsSection
-                    inputsSection
-                    progressSection
-                    bannersSection
-                    utilitiesSection
-                    feedbackSection
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 24)
+        VStack {
+            #if os(iOS)
+            content
+                .background(uiaiStyle.backgroundColor.ignoresSafeArea())
+                .navigationTitle("Components")
+                .navigationBarTitleDisplayMode(.large)
+            #else
+            content
+                .background(uiaiStyle.backgroundColor.ignoresSafeArea())
+                .navigationTitle("Components")
+            #endif
+        }
+    }
+    
+    private var content: some View {
+        ScrollView {
+            LazyVStack(spacing: 32) {
+                headerSection
+                cardsSection
+                buttonsSection
+                inputsSection
+                progressSection
+                bannersSection
+                utilitiesSection
+                feedbackSection
             }
-            .background(uiaiStyle.backgroundColor.ignoresSafeArea())
-            .navigationTitle("Components")
-            .navigationBarTitleDisplayMode(.large)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 24)
         }
     }
     
@@ -153,7 +166,20 @@ public struct ComponentsShowcaseView: View {
                     )
                 
                 // Chat Input Example
-                ChatInputView(text: .constant(""), onSend: {})
+                ChatInputView(
+                    text: $chatText,
+                    isGenerating: $isGenerating,
+                    onSend: {
+                        isGenerating = true
+                        // Simulate a delay
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            isGenerating = false
+                        }
+                    },
+                    onStop: {
+                        isGenerating = false
+                    }
+                )
             }
         }
     }
