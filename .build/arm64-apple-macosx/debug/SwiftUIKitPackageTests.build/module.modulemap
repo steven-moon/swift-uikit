@@ -1,0 +1,4 @@
+module SwiftUIKitPackageTests {
+    header "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitPackageTests.build/SwiftUIKitPackageTests-Swift.h"
+    requires objc
+}

@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/master.swiftdeps"
+  },
+  "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/swift-uikit/Tests/SwiftUIKitTests/SwiftUIKitTests.swift": {
+    "dependencies": "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/SwiftUIKitTests.d",
+    "object": "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/SwiftUIKitTests.swift.o",
+    "swiftmodule": "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/SwiftUIKitTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/swift-uikit/.build/arm64-apple-macosx/debug/SwiftUIKitTests.build/SwiftUIKitTests.swiftdeps"
+  }
+}
