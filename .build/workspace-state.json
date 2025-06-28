@@ -4,7 +4,20 @@
 
     ],
     "dependencies" : [
-
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "summa-core-swift-package",
+          "kind" : "fileSystem",
+          "location" : "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/summa-core-swift-package",
+          "name" : "SummaCore"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/summa-core-swift-package"
+        },
+        "subpath" : "summa-core-swift-package"
+      }
     ],
     "prebuilts" : [
 
