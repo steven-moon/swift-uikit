@@ -10,6 +10,7 @@
 
 import SwiftUI
 import Foundation
+import Logging
 #if canImport(UIKit)
 import UIKit
 #endif
