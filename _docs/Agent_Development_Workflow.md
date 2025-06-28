@@ -137,7 +137,7 @@ Set these environment variables for optimal performance:
 ```bash
 export DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
 export SIMULATOR_DEVICE="iPhone 16"
-export BUILD_SCHEME="SwiftUIKitDemo-iOS"
+export BUILD_SCHEME="SwiftUIKitDemo_iOS"
 export WORKSPACE_PATH="DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace"
 ```
 
@@ -146,7 +146,7 @@ export WORKSPACE_PATH="DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace"
 The agent uses these project-specific settings:
 
 - **Simulator Device**: iPhone 16 (iOS 17.0)
-- **Build Scheme**: SwiftUIKitDemo-iOS
+- **Build Scheme**: SwiftUIKitDemo_iOS
 - **Workspace**: DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace
 - **Derived Data**: /tmp/SwiftUIKit-build
 - **Log File**: /tmp/SwiftUIKit-build.log

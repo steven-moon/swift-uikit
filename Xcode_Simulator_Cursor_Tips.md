@@ -49,7 +49,7 @@
   ```
 - **Xcode build for iOS Simulator:**
   ```bash
-  xcodebuild -scheme SwiftUIKitDemo-iOS \
+  xcodebuild -scheme SwiftUIKitDemo_iOS \
     -workspace DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace \
     -destination 'platform=iOS Simulator,name=iPhone 16' build
   ```
@@ -237,7 +237,7 @@ The agent automatically runs these commands after code changes:
 ### **Project-Specific Configuration**
 
 - **Demo App**: SwiftUIKitDemo
-- **Build Scheme**: SwiftUIKitDemo-iOS
+- **Build Scheme**: SwiftUIKitDemo_iOS
 - **Workspace**: DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace
 - **Simulator**: iPhone 16 (iOS 17.0)
 - **Log Process**: SwiftUIKitDemo

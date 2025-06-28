@@ -25,7 +25,7 @@ A SwiftUIKit-specific version of the agent development workflow script that:
 - **Uses SwiftUIKit-specific paths** and configurations
 
 **Key Differences from MLXEngine:**
-- Build scheme: `SwiftUIKitDemo-iOS` (vs `MLXChatApp-iOS`)
+- Build scheme: `SwiftUIKitDemo_iOS` (vs `MLXChatApp-iOS`)
 - Workspace path: `DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace`
 - Log process: `SwiftUIKitDemo` (vs `MLXChatApp`)
 - Derived data: `/tmp/SwiftUIKit-build` (vs `/tmp/MLXEngine-build`)
@@ -61,7 +61,7 @@ A SwiftUIKit-specific Cursor configuration that:
 **Key Configuration:**
 - Project root: `/Users/stevenmoon/GitRepo/mlx-engine/SwiftUIKit`
 - Workspace: `DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace`
-- Scheme: `SwiftUIKitDemo-iOS`
+- Scheme: `SwiftUIKitDemo_iOS`
 - Log file: `/tmp/cursor-agent-swiftuikit.log`
 
 ### 4. **agent-workflow.mdc**
@@ -75,7 +75,7 @@ A SwiftUIKit-specific cursor rule that:
 - **Integrates with SwiftUIKit** development practices
 
 **Key Rules:**
-- Build SwiftUIKitDemo-iOS scheme
+- Build SwiftUIKitDemo_iOS scheme
 - Run SwiftUIKitTests
 - Monitor SwiftUIKitDemo process logs
 - Use SwiftUIKit-specific paths and configurations
@@ -91,7 +91,7 @@ Updated the existing file to:
 - **Include SwiftUIKit agent workflow** documentation
 
 **Key Changes:**
-- Build scheme: `SwiftUIKitDemo-iOS`
+- Build scheme: `SwiftUIKitDemo_iOS`
 - Workspace: `DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace`
 - Process monitoring: `SwiftUIKitDemo`
 - SwiftUIKit-specific development practices
@@ -153,7 +153,7 @@ The agent workflow integrates seamlessly with Cursor:
 | Aspect | MLXEngine | SwiftUIKit |
 |--------|-----------|------------|
 | Main App | MLXChatApp | SwiftUIKitDemo |
-| Build Scheme | MLXChatApp-iOS | SwiftUIKitDemo-iOS |
+| Build Scheme | MLXChatApp-iOS | SwiftUIKitDemo_iOS |
 | Workspace | MLXChatApp/MLXChatApp.xcodeproj/project.xcworkspace | DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace |
 | Test Filter | MLXEngineTests | SwiftUIKitTests |
 | Log Process | MLXChatApp | SwiftUIKitDemo |

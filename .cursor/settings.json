@@ -111,7 +111,7 @@
   "cursor.agent.customization": {
     "projectRoot": "/Users/stevenmoon/GitRepo/mlx-engine/SwiftUIKit",
     "workspacePath": "DemoApp/SwiftUIKitDemo.xcodeproj/project.xcworkspace",
-    "scheme": "SwiftUIKitDemo-iOS",
+    "scheme": "SwiftUIKitDemo_iOS",
     "destination": "platform=iOS Simulator,name=iPhone 16"
   },
   
