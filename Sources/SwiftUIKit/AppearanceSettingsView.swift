@@ -14,6 +14,7 @@ public struct AppearanceSettingsView: View {
     
     @State private var tempStyleKind: UIAIStyleKind?
     @State private var tempColorScheme: UIAIColorScheme?
+    @State private var showDebugPanel = false
     
     private var styleKinds: [UIAIStyleKind] = UIAIStyleKind.allCases
     private var colorSchemes: [UIAIColorScheme] = UIAIColorScheme.allCases
@@ -28,9 +29,11 @@ public struct AppearanceSettingsView: View {
         set { selectedColorSchemeRaw = newValue.rawValue }
     }
     
-    private var currentStyle: any UIAIStyle {
-        UIAIStyleRegistry.style(for: selectedStyleKind, colorScheme: selectedColorScheme)
+    private var previewStyle: any UIAIStyle {
+        UIAIStyleRegistry.style(for: tempStyleKind ?? selectedStyleKind, colorScheme: tempColorScheme ?? selectedColorScheme)
     }
+    
+    private let buildHash = UUID().uuidString.prefix(8)
     
     public init(selectedStyleKindRaw: Binding<String>, selectedColorSchemeRaw: Binding<String>) {
         self._selectedStyleKindRaw = selectedStyleKindRaw
@@ -38,141 +41,192 @@ public struct AppearanceSettingsView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 32) {
-            header
-            stylePicker
-            colorSchemePicker
-            Spacer()
-            actionButtons
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                // Style picker
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Branding Style")
+                        .font(.subheadline.bold())
+                        .padding(.leading)
+                    let columns = [
+                        GridItem(.flexible(), spacing: 16),
+                        GridItem(.flexible(), spacing: 16)
+                    ]
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        ForEach(styleKinds, id: \.self) { kind in
+                            let isSelected = (tempStyleKind ?? selectedStyleKind) == kind
+                            Button(action: { tempStyleKind = kind }) {
+                                stylePreviewCard(for: kind, isSelected: isSelected)
+                                    .frame(width: 140, height: 90)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                // Color scheme picker
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Color Scheme")
+                        .font(.subheadline.bold())
+                        .padding(.leading)
+                    VStack(spacing: 6) {
+                        ForEach(colorSchemes, id: \.self) { scheme in
+                            let isSelected = (tempColorScheme ?? selectedColorScheme) == scheme
+                            Button(action: { tempColorScheme = scheme }) {
+                                HStack(alignment: .center, spacing: 16) {
+                                    colorSchemeSwatch(for: scheme, isSelected: isSelected)
+                                        .frame(width: 24, height: 24)
+                                    Text(scheme.displayName)
+                                        .font(.system(size: 15, weight: .medium))
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .foregroundColor(.primary)
+                                    if isSelected {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .resizable()
+                                            .frame(width: 18, height: 18)
+                                            .foregroundColor(.accentColor)
+                                    }
+                                }
+                                .padding(.vertical, 8)
+                                .padding(.leading, 12)
+                                .padding(.trailing, 10)
+                                .background(isSelected ? Color.accentColor.opacity(0.08) : Color.clear)
+                                .cornerRadius(10)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                Spacer(minLength: 24)
+                HStack {
+                    Spacer()
+                    Text("Build #\(buildHash)")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                        .padding(.bottom, 8)
+                }
+                Button("Show Debug Panel (Developer)") {
+                    showDebugPanel = true
+                }
+                .font(.caption)
+                .padding(.bottom, 8)
+                .sheet(isPresented: $showDebugPanel) {
+                    DebugPanelView()
+                }
+            }
+            .padding(.vertical, 24)
         }
         .background(systemGroupedBackgroundColor.ignoresSafeArea())
         .onAppear {
             tempStyleKind = selectedStyleKind
             tempColorScheme = selectedColorScheme
+            print("[SwiftUIKit] Build #\(buildHash)")
         }
     }
     
-    private var header: some View {
-        Text("Appearance")
-            .font(.title.bold())
-            .padding(.top, 16)
-    }
-    
-    private var stylePicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 16) {
-                ForEach(styleKinds, id: \.self) { kind in
-                    styleButton(for: kind)
+    // MARK: - Style Preview Card
+    private func stylePreviewCard(for kind: UIAIStyleKind, isSelected: Bool) -> some View {
+        VStack(spacing: 8) {
+            ZStack(alignment: .topTrailing) {
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(UIAIStyleRegistry.style(for: kind, colorScheme: tempColorScheme ?? selectedColorScheme).backgroundColor)
+                    .frame(width: 64, height: 48)
+                    .shadow(color: isSelected ? Color.accentColor.opacity(0.18) : .clear, radius: 6, x: 0, y: 2)
+                    .overlay(
+                        VStack(spacing: 0) {
+                            Rectangle()
+                                .fill(UIAIStyleRegistry.style(for: kind, colorScheme: tempColorScheme ?? selectedColorScheme).accentColor)
+                                .frame(height: 8)
+                                .cornerRadius(4)
+                            Spacer()
+                            Text("Aa")
+                                .font(.headline)
+                                .foregroundColor(UIAIStyleRegistry.style(for: kind, colorScheme: tempColorScheme ?? selectedColorScheme).foregroundColor)
+                                .padding(.bottom, 6)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    )
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.accentColor)
+                        .background(Circle().fill(Color.white).frame(width: 22, height: 22))
+                        .offset(x: 8, y: -8)
                 }
             }
-            .padding(.horizontal)
+            Text(kind.displayName)
+                .font(.footnote)
+                .foregroundColor(isSelected ? .accentColor : .primary)
+                .fixedSize(horizontal: true, vertical: false)
         }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 12)
+        .background(isSelected ? Color.accentColor.opacity(0.08) : systemGray6Color)
+        .cornerRadius(16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 2)
+        )
     }
     
-    private var colorSchemePicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 16) {
-                ForEach(colorSchemes, id: \.self) { scheme in
-                    colorSchemeButton(for: scheme)
+    // Swatch for color scheme
+    private func colorSchemeSwatch(for scheme: UIAIColorScheme, isSelected: Bool) -> some View {
+        Button(action: { tempColorScheme = scheme }) {
+            VStack(spacing: 4) {
+                ZStack {
+                    Circle()
+                        .fill(scheme == .light ? Color.white : Color.black)
+                        .frame(width: 28, height: 28)
+                        .overlay(
+                            Circle()
+                                .stroke(isSelected ? Color.accentColor : Color.gray, lineWidth: 2)
+                        )
+                    if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.accentColor)
+                            .background(Circle().fill(Color.white).frame(width: 18, height: 18))
+                            .offset(x: 10, y: -10)
+                    }
                 }
-            }
-            .padding(.horizontal)
-        }
-    }
-    
-    private var actionButtons: some View {
-        VStack(spacing: 16) {
-            Button(action: {
-                tempStyleKind = nil
-                tempColorScheme = nil
-                selectedStyleKindRaw = UIAIStyleKind.minimal.rawValue
-                selectedColorSchemeRaw = UIAIColorScheme.light.rawValue
-            }) {
-                HStack {
-                    Image(systemName: "arrow.counterclockwise")
-                    Text("Reset")
-                }
-                .foregroundColor(.red)
-            }
-            Spacer()
-            Button(action: {
-                if let kind = tempStyleKind {
-                    selectedStyleKindRaw = kind.rawValue
-                }
-                if let scheme = tempColorScheme {
-                    selectedColorSchemeRaw = scheme.rawValue
-                }
-                dismiss()
-            }) {
-                Text("Use this style")
-                    .fontWeight(.semibold)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
-                    .background(Color.accentColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-            }
-            Button(action: {
-                dismiss()
-            }) {
-                Text("Done")
-                    .fontWeight(.regular)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
-                    .background(systemGray5Color)
-                    .foregroundColor(.primary)
-                    .cornerRadius(12)
-            }
-        }
-        .padding(24)
-        .background(systemBackgroundColor)
-        .cornerRadius(28)
-        .shadow(color: Color.black.opacity(0.08), radius: 16, x: 0, y: 8)
-    }
-    
-    private func styleButton(for kind: UIAIStyleKind) -> some View {
-        Button {
-            tempStyleKind = kind
-        } label: {
-            HStack(spacing: 8) {
-                Image(systemName: kind.iconName)
-                    .foregroundColor(kind == (tempStyleKind ?? selectedStyleKind) ? .white : .primary)
-                Text(kind.displayName)
-                    .font(.headline)
-                    .foregroundColor(kind == (tempStyleKind ?? selectedStyleKind) ? .white : .primary)
-            }
-            .padding(.vertical, 10)
-            .padding(.horizontal, 18)
-            .background(kind == (tempStyleKind ?? selectedStyleKind) ? Color.accentColor : systemGray6Color)
-            .cornerRadius(16)
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(kind == (tempStyleKind ?? selectedStyleKind) ? Color.accentColor : Color.clear, lineWidth: 2)
-            )
-            .shadow(color: kind == (tempStyleKind ?? selectedStyleKind) ? Color.accentColor.opacity(0.2) : .clear, radius: 4, x: 0, y: 2)
-        }
-    }
-    
-    private func colorSchemeButton(for scheme: UIAIColorScheme) -> some View {
-        Button {
-            tempColorScheme = scheme
-        } label: {
-            VStack {
                 Text(scheme.displayName)
-                    .font(.subheadline)
-                    .fontWeight(.medium)
+                    .font(.caption)
+                    .foregroundColor(.primary)
+                    .fixedSize(horizontal: true, vertical: false)
             }
-            .padding(.vertical, 10)
-            .padding(.horizontal, 20)
-            .background(systemGray5Color)
-            .foregroundColor(.primary)
-            .cornerRadius(12)
+            .padding(.vertical, 6)
+            .padding(.horizontal, 8)
         }
         .buttonStyle(.plain)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(tempColorScheme == scheme ? Color.blue : Color.clear, lineWidth: 2)
-        )
+    }
+}
+
+// Simple live chat preview for style
+private struct ChatPreviewView: View {
+    @Environment(\.uiaiStyle) private var style
+    var body: some View {
+        ZStack {
+            style.backgroundColor
+            VStack(spacing: 8) {
+                HStack {
+                    Circle().fill(style.accentColor).frame(width: 28, height: 28)
+                    Text("You: Hello!")
+                        .font(.body)
+                        .foregroundColor(style.foregroundColor)
+                    Spacer()
+                }
+                HStack {
+                    Spacer()
+                    Text("AI: Hi there!")
+                        .font(.body)
+                        .foregroundColor(style.secondaryForegroundColor)
+                    Circle().fill(style.accentColor).frame(width: 28, height: 28)
+                }
+            }
+            .padding(.horizontal)
+        }
+        .cornerRadius(16)
     }
 }
 

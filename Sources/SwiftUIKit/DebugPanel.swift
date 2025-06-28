@@ -9,6 +9,11 @@
 
 import Foundation
 import SwiftUI
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
 
 /// A SwiftUI diagnostics panel for logs, debug reports, and health checks.
 ///
@@ -172,4 +177,105 @@ fileprivate struct AppLogger {
 fileprivate struct DebugUtility {
     static let shared = DebugUtility()
     func generateDebugReport(onlyErrorsAndWarnings: Bool) async -> String { return "[Debug report not implemented in this stub]" }
+}
+
+public struct DebugPanelView: View {
+    @ObservedObject var info = DebugInfoProvider.shared
+    @Environment(\.dismiss) private var dismiss
+    
+    public init() {}
+    
+    public var body: some View {
+        NavigationView {
+            List {
+                Section(header: Text("Build Info")) {
+                    HStack { Text("Build Hash"); Spacer(); Text(info.buildHash).font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("Build Date"); Spacer(); Text(info.buildDate).font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("App Version"); Spacer(); Text(info.appVersion).font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("SwiftUIKit Version"); Spacer(); Text(info.swiftUIKitVersion).font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("Bundle ID"); Spacer(); Text(info.bundleID).font(.caption).foregroundColor(.secondary) }
+                }
+                Section(header: Text("Device Info")) {
+                    HStack { Text("Device"); Spacer(); Text(info.deviceModel).font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("OS Version"); Spacer(); Text(info.osVersion).font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("Locale"); Spacer(); Text(info.locale).font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("Screen Size"); Spacer(); Text(info.screenSize).font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("Simulator"); Spacer(); Text(info.isSimulator ? "Yes" : "No").font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("Debug Build"); Spacer(); Text(info.isDebug ? "Yes" : "No").font(.caption).foregroundColor(.secondary) }
+                }
+                Section(header: Text("Logs")) {
+                    ScrollView(.vertical) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            ForEach(info.logs, id: \.self) { log in
+                                Text(log).font(.caption2).foregroundColor(.primary)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .frame(minHeight: 120, maxHeight: 240)
+                    Button("Copy All Logs") {
+                        #if os(iOS)
+                        UIPasteboard.general.string = info.logs.joined(separator: "\n")
+                        #elseif os(macOS)
+                        NSPasteboard.general.clearContents()
+                        NSPasteboard.general.setString(info.logs.joined(separator: "\n"), forType: .string)
+                        #endif
+                    }
+                    Button("Clear Logs") {
+                        info.clearLogs()
+                    }
+                }
+            }
+            .navigationTitle("Debug Panel")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") { dismiss() }
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Copy Info") {
+                        let all = "Build Hash: \(info.buildHash)\nBuild Date: \(info.buildDate)\nApp Version: \(info.appVersion)\nSwiftUIKit: \(info.swiftUIKitVersion)\nBundle: \(info.bundleID)\nDevice: \(info.deviceModel)\nOS: \(info.osVersion)\nLocale: \(info.locale)\nScreen: \(info.screenSize)\nSimulator: \(info.isSimulator)\nDebug: \(info.isDebug)"
+                        #if os(iOS)
+                        UIPasteboard.general.string = all
+                        #elseif os(macOS)
+                        NSPasteboard.general.clearContents()
+                        NSPasteboard.general.setString(all, forType: .string)
+                        #endif
+                    }
+                }
+            }
+        }
+    }
+}
+
+public struct UserDebugPanelView: View {
+    @ObservedObject var info = DebugInfoProvider.shared
+    @Environment(\.dismiss) private var dismiss
+    public init() {}
+    public var body: some View {
+        NavigationView {
+            List {
+                Section(header: Text("Build Info")) {
+                    HStack { Text("Build Hash"); Spacer(); Text(info.buildHash).font(.caption).foregroundColor(.secondary) }
+                    HStack { Text("App Version"); Spacer(); Text(info.appVersion).font(.caption).foregroundColor(.secondary) }
+                }
+            }
+            .navigationTitle("App Info")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") { dismiss() }
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Copy Info") {
+                        let all = "Build Hash: \(info.buildHash)\nApp Version: \(info.appVersion)"
+                        #if os(iOS)
+                        UIPasteboard.general.string = all
+                        #elseif os(macOS)
+                        NSPasteboard.general.clearContents()
+                        NSPasteboard.general.setString(all, forType: .string)
+                        #endif
+                    }
+                }
+            }
+        }
+    }
 } 
