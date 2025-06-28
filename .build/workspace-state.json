@@ -9,12 +9,12 @@
         "packageRef" : {
           "identity" : "summa-core-swift-package",
           "kind" : "fileSystem",
-          "location" : "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/summa-core-swift-package",
-          "name" : "SummaCore"
+          "location" : "/Users/stevenmoon/GitRepo/summa-coding-macos-companion-cursor-workspace/summa-core-swift-package",
+          "name" : "SummaCoreSwiftPackage"
         },
         "state" : {
           "name" : "fileSystem",
-          "path" : "/Users/stevenmoon/GitRepo/mlx-engine-cursor-workspace/summa-core-swift-package"
+          "path" : "/Users/stevenmoon/GitRepo/summa-coding-macos-companion-cursor-workspace/summa-core-swift-package"
         },
         "subpath" : "summa-core-swift-package"
       }
