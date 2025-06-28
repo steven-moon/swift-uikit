@@ -15,6 +15,7 @@ public struct AppearanceSettingsView: View {
     @State private var tempStyleKind: UIAIStyleKind?
     @State private var tempColorScheme: UIAIColorScheme?
     @State private var showDebugPanel = false
+    @State private var showApplyConfirmation = false
     
     private var styleKinds: [UIAIStyleKind] = UIAIStyleKind.allCases
     private var colorSchemes: [UIAIColorScheme] = UIAIColorScheme.allCases
@@ -41,89 +42,142 @@ public struct AppearanceSettingsView: View {
     }
     
     public var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                // Style picker
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Branding Style")
-                        .font(.subheadline.bold())
-                        .padding(.leading)
-                    let columns = [
-                        GridItem(.flexible(), spacing: 16),
-                        GridItem(.flexible(), spacing: 16)
-                    ]
-                    LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(styleKinds, id: \.self) { kind in
-                            let isSelected = (tempStyleKind ?? selectedStyleKind) == kind
-                            Button(action: { tempStyleKind = kind }) {
-                                stylePreviewCard(for: kind, isSelected: isSelected)
-                                    .frame(width: 140, height: 90)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-                // Color scheme picker
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Color Scheme")
-                        .font(.subheadline.bold())
-                        .padding(.leading)
-                    VStack(spacing: 6) {
-                        ForEach(colorSchemes, id: \.self) { scheme in
-                            let isSelected = (tempColorScheme ?? selectedColorScheme) == scheme
-                            Button(action: { tempColorScheme = scheme }) {
-                                HStack(alignment: .center, spacing: 16) {
-                                    colorSchemeSwatch(for: scheme, isSelected: isSelected)
-                                        .frame(width: 24, height: 24)
-                                    Text(scheme.displayName)
-                                        .font(.system(size: 15, weight: .medium))
-                                        .lineLimit(1)
-                                        .truncationMode(.tail)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .foregroundColor(.primary)
-                                    if isSelected {
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .resizable()
-                                            .frame(width: 18, height: 18)
-                                            .foregroundColor(.accentColor)
-                                    }
+        ZStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    // Style picker
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Branding Style")
+                            .font(.subheadline.bold())
+                            .padding(.leading)
+                        let columns = [
+                            GridItem(.flexible(), spacing: 16),
+                            GridItem(.flexible(), spacing: 16)
+                        ]
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(styleKinds, id: \.self) { kind in
+                                let isSelected = (tempStyleKind ?? selectedStyleKind) == kind
+                                Button(action: { tempStyleKind = kind }) {
+                                    stylePreviewCard(for: kind, isSelected: isSelected)
+                                        .frame(width: 140, height: 90)
                                 }
-                                .padding(.vertical, 8)
-                                .padding(.leading, 12)
-                                .padding(.trailing, 10)
-                                .background(isSelected ? Color.accentColor.opacity(0.08) : Color.clear)
-                                .cornerRadius(10)
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
+                    // Color scheme picker
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Color Scheme")
+                            .font(.subheadline.bold())
+                            .padding(.leading)
+                        VStack(spacing: 14) {
+                            ForEach(colorSchemes, id: \.self) { scheme in
+                                let isSelected = (tempColorScheme ?? selectedColorScheme) == scheme
+                                Button(action: { tempColorScheme = scheme }) {
+                                    HStack(alignment: .center, spacing: 16) {
+                                        colorSchemeSwatch(for: scheme, isSelected: isSelected)
+                                            .frame(width: 24, height: 24)
+                                        Text(scheme.displayName)
+                                            .font(.system(size: 15, weight: .medium))
+                                            .lineLimit(1)
+                                            .truncationMode(.tail)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .foregroundColor(.primary)
+                                        if isSelected {
+                                            Image(systemName: "checkmark.circle.fill")
+                                                .resizable()
+                                                .frame(width: 18, height: 18)
+                                                .foregroundColor(.accentColor)
+                                        }
+                                    }
+                                    .padding(.vertical, 12)
+                                    .padding(.leading, 12)
+                                    .padding(.trailing, 10)
+                                    .background(isSelected ? Color.accentColor.opacity(0.08) : Color.clear)
+                                    .cornerRadius(10)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    Spacer(minLength: 24)
+                    HStack {
+                        Spacer()
+                        Text("Build #\(buildHash)")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .padding(.bottom, 8)
+                    }
+                    Button("Show Debug Panel (Developer)") {
+                        showDebugPanel = true
+                    }
+                    .font(.caption)
+                    .padding(.bottom, 8)
+                    .sheet(isPresented: $showDebugPanel) {
+                        DebugPanelView()
+                    }
                 }
-                Spacer(minLength: 24)
-                HStack {
-                    Spacer()
-                    Text("Build #\(buildHash)")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                        .padding(.bottom, 8)
-                }
-                Button("Show Debug Panel (Developer)") {
-                    showDebugPanel = true
-                }
-                .font(.caption)
-                .padding(.bottom, 8)
-                .sheet(isPresented: $showDebugPanel) {
-                    DebugPanelView()
+                .padding(.vertical, 24)
+            }
+            .background(systemGroupedBackgroundColor.ignoresSafeArea())
+            .onAppear {
+                tempStyleKind = selectedStyleKind
+                tempColorScheme = selectedColorScheme
+                print("[SwiftUIKit] Build #\(buildHash)")
+            }
+            .safeAreaInset(edge: .bottom) {
+                if (tempStyleKind != selectedStyleKind || tempColorScheme != selectedColorScheme) {
+                    Button(action: {
+                        if let newKind = tempStyleKind { selectedStyleKindRaw = newKind.rawValue }
+                        if let newScheme = tempColorScheme { selectedColorSchemeRaw = newScheme.rawValue }
+                        #if canImport(UIKit)
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        #endif
+                        withAnimation {
+                            showApplyConfirmation = true
+                        }
+                        dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "checkmark.circle.fill")
+                            Text("Apply Changes")
+                                .fontWeight(.semibold)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.accentColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(14)
+                        .shadow(radius: 4, y: 2)
+                    }
+                    .padding([.horizontal, .bottom], 16)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
-            .padding(.vertical, 24)
-        }
-        .background(systemGroupedBackgroundColor.ignoresSafeArea())
-        .onAppear {
-            tempStyleKind = selectedStyleKind
-            tempColorScheme = selectedColorScheme
-            print("[SwiftUIKit] Build #\(buildHash)")
+            // Confirmation toast/banner
+            if showApplyConfirmation {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Label("Changes applied!", systemImage: "checkmark.seal.fill")
+                            .padding(12)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(12)
+                            .shadow(radius: 6)
+                        Spacer()
+                    }
+                    .padding(.bottom, 40)
+                }
+                .transition(.opacity)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        withAnimation { showApplyConfirmation = false }
+                    }
+                }
+            }
         }
     }
     
