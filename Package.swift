@@ -20,9 +20,15 @@ let package = Package(
             targets: ["SwiftUIKit"]
         )
     ],
+    dependencies: [
+        .package(path: "../summa-core-swift-package")
+    ],
     targets: [
         .target(
             name: "SwiftUIKit",
+            dependencies: [
+                .product(name: "SummaCoreSwiftPackage", package: "summa-core-swift-package")
+            ],
             path: "Sources/SwiftUIKit"
         ),
         .testTarget(
