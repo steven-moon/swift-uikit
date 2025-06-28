@@ -14,6 +14,7 @@ import UIKit
 #elseif os(macOS)
 import AppKit
 #endif
+import Logging
 
 /// A SwiftUI diagnostics panel for logs, debug reports, and health checks.
 ///
@@ -157,27 +158,6 @@ struct DebugPanel_Previews: PreviewProvider {
     }
 }
 #endif
-
-// --- Stubs for missing types ---
-fileprivate enum LogLevel: String, CaseIterable, Hashable, Identifiable {
-    case debug, info, warning, error, critical
-    var id: String { rawValue }
-}
-fileprivate struct LogEntry: Identifiable, Hashable {
-    let id = UUID()
-    let level: LogLevel
-    let message: String
-}
-fileprivate struct AppLogger {
-    static let shared = AppLogger()
-    func recentLogs(limit: Int, levels: [LogLevel]) -> [LogEntry] { return [] }
-    func debug(_ tag: String, _ msg: String) {}
-    func error(_ tag: String, _ msg: String) {}
-}
-fileprivate struct DebugUtility {
-    static let shared = DebugUtility()
-    func generateDebugReport(onlyErrorsAndWarnings: Bool) async -> String { return "[Debug report not implemented in this stub]" }
-}
 
 public struct DebugPanelView: View {
     @ObservedObject var info = DebugInfoProvider.shared
