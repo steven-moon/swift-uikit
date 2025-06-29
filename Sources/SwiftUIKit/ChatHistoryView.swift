@@ -34,7 +34,7 @@ public struct ChatHistoryView<Message: Identifiable & Hashable>: View {
         }
         .padding()
       }
-      .onChange(of: messages.count) { _ in
+      .onChange(of: messages.count) { oldValue, newValue in
         if let last = messages.last {
           proxy.scrollTo(last.id, anchor: .bottom)
         }

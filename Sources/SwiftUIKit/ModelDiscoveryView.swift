@@ -651,7 +651,7 @@ public struct ModelDiscoveryView: View {
         let fileManager = FileManagerService.shared
         let modelPath = try await fileManager.getModelPath(modelId: model.id)
         try FileManager.default.removeItem(at: modelPath)
-        await MainActor.run {
+        let _ = await MainActor.run {
           downloadedModelIds.remove(model.id)
         }
       } catch {
